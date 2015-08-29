@@ -9,8 +9,20 @@ handlers:
   static_files: favicon.ico
   upload: favicon\.ico
 
-- url: .*
+- url: /stylesheets
+  static_dir: stylesheets
+
+# Twitter Bootstrap
+- url: /bootstrap
+  static_dir: bootstrap
+
+- url: /img
+  static_dir: img
+
+# This must be the last one
+- url: /.*
   script: main.app
+  login: required
 
 libraries:
 - name: webapp2

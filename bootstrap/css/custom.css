@@ -1,0 +1,48 @@
+body {
+	padding-top: 40px;
+	padding-bottom: 40px;
+	background-color: #fff;
+	pxfont-size:1
+}
+
+blockquote {
+	margin-bottom: 10px;
+	border-left-color: #bbb;
+}
+
+form {
+	margin-top: 10px;
+}
+
+form label {
+	width: 90px;
+	display: inline-block;
+}
+
+.form-signin input[type="text"] {
+	font-size: 16px;
+	height: auto;
+	margin-bottom: 15px;
+	padding: 7px 9px;
+}
+
+.row {
+	margin-left: 0px;
+	margin-top: 10px;
+}
+
+#globalfooter .gf-footer-locale {
+	float: right;
+	white-space: nowrap;
+}
+
+#globalfooter .gf-footer-locale-flag {
+	background-repeat: no-repeat;
+	margin: 1px 5px 0px 0px;
+	background-size: 16px 16px;
+	height: 16px;
+	width: 16px;
+	background-image:
+		url("img/sg_flag.png");
+	float: left
+}
