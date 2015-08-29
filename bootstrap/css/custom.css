@@ -2,7 +2,7 @@ body {
 	padding-top: 40px;
 	padding-bottom: 40px;
 	background-color: #fff;
-	pxfont-size:1
+	font-size: 17px;
 }
 
 blockquote {
@@ -43,6 +43,6 @@ form label {
 	height: 16px;
 	width: 16px;
 	background-image:
-		url("img/sg_flag.png");
+		url("../../img/sg_flag.png");
 	float: left
 }
