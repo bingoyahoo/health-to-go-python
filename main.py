@@ -7,7 +7,7 @@ from google.appengine.ext import ndb
 import webapp2
 
 MAIN_PAGE_FOOTER_TEMPLATE = """\
-    <form action="/sign?%s" method="post">
+    <form action="/triage?%s" method="post">
       <div>NRIC: <input type="text" name="nricNum" placeholder="S1234567A"></div>
       <div>Temperature: <input type="text" name="temperature" placeholder="37"></div>
       <div>Heartbeat: <input type="text" name="heartbeat" placeholder="80"></div>
@@ -91,10 +91,10 @@ class MainPage(webapp2.RequestHandler):
             url_linktext = 'Login'
 
         # Write the submission form and the footer of the page
-        sign_query_params = urllib.urlencode({'hospital_name':
+        triage_query_params = urllib.urlencode({'hospital_name':
                                               hospital_name})
         self.response.write(MAIN_PAGE_FOOTER_TEMPLATE %
-                            (sign_query_params, cgi.escape(hospital_name),
+                            (triage_query_params, cgi.escape(hospital_name),
                              url, url_linktext))
 
 class Triage(webapp2.RequestHandler):
@@ -129,5 +129,5 @@ class Triage(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/', MainPage),
-    ('/sign', Triage),
+    ('/triage', Triage),
 ], debug=True)
