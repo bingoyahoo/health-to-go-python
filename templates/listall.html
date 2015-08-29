@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+{% autoescape true %}
+<html>
+  <head>
+      {% for reading in readings %}
+      <title>Triage {{reading.nricNum}}</title>
+      {% endfor %}
+  </head>
+
+  <body>
+    {% for reading in readings %}
+      {% if reading.hospitalStaff %}
+        <b>{{ reading.hospitalStaff.email }}
+          {% if user and user.user_id() == reading.hospitalStaff.identity %}
+            (You)
+          {% endif %}
+        </b> wrote:
+      {% else %}
+       An anonymous person wrote:
+      {% endif %}
+      <blockquote>{{ reading.nricNum }}</blockquote>
+        <blockquote>{{ reading.temperature }}</blockquote>
+        <blockquote>{{ reading.heartrate }}</blockquote>
+    {% endfor %}
+
+    <form action="/triage?hospital_name={{ hospital_name }}" method="post">
+      <div>NRIC: <input type="text" name="nricNum" placeholder="S1234567A"></div>
+      <div>Temperature: <input type="text" name="temperature" placeholder="37"></div>
+      <div>Heartbeat: <input type="text" name="heartbeat" placeholder="80"></div>
+      <div><input type="submit" value="Save Form"></div>
+    </form>
+
+    <hr>
+
+    <!-- Footer -->
+    <form>Hospital name:
+      <input value="{{ hospital_name }}" name="hospital_name">
+      <input type="submit" value="switch">
+    </form>
+
+    <a href="{{ url|safe }}">{{ url_linktext }}</a>
+
+  </body>
+</html>
+{% endautoescape %}
+

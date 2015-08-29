@@ -1,29 +1,21 @@
 import cgi
 import urllib
+import os
 
 from google.appengine.api import users
 from google.appengine.ext import ndb
 
 import webapp2
+import jinja2
 
-MAIN_PAGE_FOOTER_TEMPLATE = """\
-    <form action="/triage?%s" method="post">
-      <div>NRIC: <input type="text" name="nricNum" placeholder="S1234567A"></div>
-      <div>Temperature: <input type="text" name="temperature" placeholder="37"></div>
-      <div>Heartbeat: <input type="text" name="heartbeat" placeholder="80"></div>
-      <div><input type="submit" value="Insert Reading"></div>
-    </form>
-    <hr>
-    <form>Hospital name:
-      <input value="%s" name="hospital_name">
-      <input type="submit" value="switch">
-    </form>
-    <a href="%s">%s</a>
-  </body>
-</html>
-"""
+# Tell program where your templates are
+JINJA_ENVIRONMENT = jinja2.Environment(
+    loader=jinja2.FileSystemLoader(os.path.dirname(__file__) + "/templates"),
+    extensions=['jinja2.ext.autoescape'],
+    autoescape=True)
 
 DEFAULT_HOSPITAL_NAME = 'default_hospital'
+
 
 # We set a parent key on the 'Greetings' to ensure that they are all
 # in the same entity group. Queries across the single entity group
@@ -55,34 +47,19 @@ class TriageReading(ndb.Model):
 
 class MainPage(webapp2.RequestHandler):
     def get(self):
-        self.response.write('<html><body>')
-        hospital_name = self.request.get('hospital_name',
-                                          DEFAULT_HOSPITAL_NAME)
+        template = JINJA_ENVIRONMENT.get_template('main.html')
+        self.response.write(template.render())
 
-        # Ancestor Queries, as shown here, are strongly consistent
-        # with the High Replication Datastore. Queries that span
-        # entity groups are eventually consistent. If we omitted the
-        # ancestor from this query there would be a slight chance that
-        # Greeting that had just been written would not show up in a
-        # query.
-        triage_readings_query = TriageReading.query(
+
+class ListAll(webapp2.RequestHandler):
+    def get(self):
+        hospital_name = self.request.get('hospital_name',
+                                         DEFAULT_HOSPITAL_NAME)
+        readings_query = TriageReading.query(
             ancestor=hospital_key(hospital_name)).order(-TriageReading.date)
-        readings = triage_readings_query.fetch(10)
+        readings = readings_query.fetch(10)
 
         user = users.get_current_user()
-        for reading in readings:
-            if reading.hospitalStaff:
-                hospitalStaff = reading.hospitalStaff.email
-                if user and user.user_id() == reading.hospitalStaff.identity:
-                    hospitalStaff += ' (You)'
-                self.response.write('<b>%s</b> wrote:' % hospitalStaff)
-            else:
-                self.response.write('An anonymous person wrote:')
-            self.response.write('<blockquote>NRIC: %s</blockquote>' % reading.nricNum)
-            self.response.write('<blockquote>Temperature: %s</blockquote>' % reading.temperature)
-            self.response.write('<blockquote>Heartrate: %s</blockquote>' % reading.heartrate)
-
-
         if user:
             url = users.create_logout_url(self.request.uri)
             url_linktext = 'Logout'
@@ -90,12 +67,17 @@ class MainPage(webapp2.RequestHandler):
             url = users.create_login_url(self.request.uri)
             url_linktext = 'Login'
 
-        # Write the submission form and the footer of the page
-        triage_query_params = urllib.urlencode({'hospital_name':
-                                              hospital_name})
-        self.response.write(MAIN_PAGE_FOOTER_TEMPLATE %
-                            (triage_query_params, cgi.escape(hospital_name),
-                             url, url_linktext))
+        template_values = {
+            'user': user,
+            'readings': readings,
+            'hospital_name': urllib.quote_plus(hospital_name),
+            'url': url,
+            'url_linktext': url_linktext,
+        }
+
+        template = JINJA_ENVIRONMENT.get_template('listall.html')
+        self.response.write(template.render(template_values))
+
 
 class Triage(webapp2.RequestHandler):
     def post(self):
@@ -105,20 +87,21 @@ class Triage(webapp2.RequestHandler):
         # rate to a single entity group should be limited to
         # ~1/second.
         hospital_name = self.request.get('hospital_name',
-                                          DEFAULT_HOSPITAL_NAME)
+                                         DEFAULT_HOSPITAL_NAME)
         reading = TriageReading(parent=hospital_key(hospital_name))
 
         if users.get_current_user():
             reading.hospitalStaff = HospitalStaff(
-                    identity=users.get_current_user().user_id(),
-                    email=users.get_current_user().email())
+                identity=users.get_current_user().user_id(),
+                email=users.get_current_user().email())
 
         nric_of_patient = self.request.get('nricNum')
         temp_of_patient = self.request.get('temperature')
         heartrate_of_patient = self.request.get('heartbeat')
 
         # Do some input validation before putting data into Datastore
-        if (nric_of_patient.isalnum() and len(nric_of_patient) == 9 and temp_of_patient.isdigit() and heartrate_of_patient.isdigit()):
+        if (nric_of_patient.isalnum() and len(nric_of_patient) == 9
+            and temp_of_patient.isdigit() and heartrate_of_patient.isdigit()):
             reading.nricNum = nric_of_patient
             reading.temperature = heartrate_of_patient
             reading.heartrate = heartrate_of_patient
@@ -127,7 +110,9 @@ class Triage(webapp2.RequestHandler):
         query_params = {'hospital_name': hospital_name}
         self.redirect('/?' + urllib.urlencode(query_params))
 
+
 app = webapp2.WSGIApplication([
     ('/', MainPage),
+    ('/listall', ListAll),
     ('/triage', Triage),
 ], debug=True)

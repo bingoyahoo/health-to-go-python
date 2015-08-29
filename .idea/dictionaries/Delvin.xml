@@ -2,6 +2,7 @@
   <dictionary name="Delvin">
     <words>
       <w>datastore</w>
+      <w>nric</w>
     </words>
   </dictionary>
 </component>
