@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Health To Go!</title>
+
+<link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <![endif]-->
+
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+<!-- Auto refresh page every 30 seconds -->
+<meta http-equiv="refresh" content="300">
+
+<!-- Fade in fade out page transition -->
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("body").css("display", "none");
+		$("body").fadeIn(2000);
+		$("a.transition").click(function(event) {
+			event.preventDefault();
+			linkLocation = this.href;
+			$("body").fadeOut(0, redirectPage);
+		});
+		function redirectPage() {
+			window.location = linkLocation;
+		}
+	});
+</script>
+
+<!-- Stylesheet -->
+	<link
+			href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700'
+			rel='stylesheet' type='text/css'>
+	<link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+	<link href="bootstrap/css/custom.css" rel="stylesheet">
+
+</head>
+
+<body>
+	{% include "header.html" %}
+
+	{% block body %}{% endblock %}
+
+	{% include 'footer.html' %}
+	<script src="https://apis.google.com/js/client.js?onload=init"></script>
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+
+</body>
+</html>
