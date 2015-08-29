@@ -49,7 +49,7 @@ class TriageReading(ndb.Model):
     hospitalStaff = ndb.StructuredProperty(HospitalStaff)
     nricNum = ndb.StringProperty()
     temperature = ndb.StringProperty(indexed=False)
-    heartRate = ndb.StringProperty(indexed=False)
+    heartrate = ndb.StringProperty(indexed=False)
     date = ndb.DateTimeProperty(auto_now_add=True)
 
 
@@ -80,7 +80,7 @@ class MainPage(webapp2.RequestHandler):
                 self.response.write('An anonymous person wrote:')
             self.response.write('<blockquote>NRIC: %s</blockquote>' % reading.nricNum)
             self.response.write('<blockquote>Temperature: %s</blockquote>' % reading.temperature)
-            self.response.write('<blockquote>Heartrate: %s</blockquote>' % reading.heartRate)
+            self.response.write('<blockquote>Heartrate: %s</blockquote>' % reading.heartrate)
 
 
         if user:
@@ -115,12 +115,13 @@ class Triage(webapp2.RequestHandler):
 
         nric_of_patient = self.request.get('nricNum')
         temp_of_patient = self.request.get('temperature')
-        heartrate_of_patient = self.request.get('heartRate')
+        heartrate_of_patient = self.request.get('heartbeat')
 
+        # Do some input validation before putting data into Datastore
         if (nric_of_patient.isalnum() and len(nric_of_patient) == 9 and temp_of_patient.isdigit() and heartrate_of_patient.isdigit()):
             reading.nricNum = nric_of_patient
-            reading.temperature = self.request.get('temperature')
-            reading.heartRate - self.request.get('heartRate')
+            reading.temperature = heartrate_of_patient
+            reading.heartrate = heartrate_of_patient
             reading.put()
 
         query_params = {'hospital_name': hospital_name}
