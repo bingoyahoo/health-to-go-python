@@ -8,7 +8,7 @@
         <option name="templatesFolder" value="" />
         <option name="oauth2" value="false" />
         <option name="deployConfigured" value="true" />
-        <option name="saveCredentials" value="false" />
+        <option name="saveCredentials" value="true" />
       </configuration>
     </facet>
   </component>

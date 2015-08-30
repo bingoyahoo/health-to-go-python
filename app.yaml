@@ -9,6 +9,9 @@ handlers:
   static_files: favicon.ico
   upload: favicon\.ico
 
+- url: /
+  script: main.app
+
 - url: /stylesheets
   static_dir: stylesheets
 
@@ -18,6 +21,10 @@ handlers:
 
 - url: /img
   static_dir: img
+
+- url: /listall
+  script: main.app
+#  login: admin
 
 # This must be the last one
 - url: /.*

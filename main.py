@@ -14,7 +14,7 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
-DEFAULT_HOSPITAL_NAME = 'default_hospital'
+DEFAULT_HOSPITAL_NAME = 'SGH'
 
 
 # We set a parent key on the 'Greetings' to ensure that they are all
@@ -75,20 +75,22 @@ class ListAll(webapp2.RequestHandler):
             'url_linktext': url_linktext,
         }
 
-        template = JINJA_ENVIRONMENT.get_template('listall.html')
+        template = JINJA_ENVIRONMENT.get_template('listall_san.html')
         self.response.write(template.render(template_values))
 
 
-class Triage(webapp2.RequestHandler):
+class Create(webapp2.RequestHandler):
+    def get(self):
+        template = JINJA_ENVIRONMENT.get_template('create.html')
+        self.response.write(template.render())
+
     def post(self):
         # We set the same parent key on the 'Greeting' to ensure each
         # Greeting is in the same entity group. Queries across the
         # single entity group will be consistent. However, the write
         # rate to a single entity group should be limited to
         # ~1/second.
-        hospital_name = self.request.get('hospital_name',
-                                         DEFAULT_HOSPITAL_NAME)
-        reading = TriageReading(parent=hospital_key(hospital_name))
+        reading = TriageReading(parent=hospital_key(DEFAULT_HOSPITAL_NAME))
 
         if users.get_current_user():
             reading.hospitalStaff = HospitalStaff(
@@ -107,12 +109,27 @@ class Triage(webapp2.RequestHandler):
             reading.heartrate = heartrate_of_patient
             reading.put()
 
-        query_params = {'hospital_name': hospital_name}
-        self.redirect('/?' + urllib.urlencode(query_params))
+        query_params = {'hospital_name': DEFAULT_HOSPITAL_NAME}
+        self.redirect("listall")
+        # self.redirect('listall/?' + urllib.urlencode(query_params))
+
+
+class Triage(webapp2.RequestHandler):
+    def get(self):
+        template = JINJA_ENVIRONMENT.get_template('triage.html')
+        self.response.write(template.render())
+
+
+class Faq(webapp2.RequestHandler):
+    def get(self):
+        template = JINJA_ENVIRONMENT.get_template('faq.html')
+        self.response.write(template.render())
 
 
 app = webapp2.WSGIApplication([
     ('/', MainPage),
     ('/listall', ListAll),
+    ('/create', Create),
     ('/triage', Triage),
+    ('/faq', Faq)
 ], debug=True)
