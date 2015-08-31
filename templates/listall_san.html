@@ -81,10 +81,11 @@
                     </td>
 
                     <td> <!-- Nric -->
-                        {{ reading.nricNum}}
+                        {{ reading.nric_num}}
                     </td>
                     <td>
-                        Created by
+                        {{ reading.name}}
+                      <!--  Created by
                         {% if reading.hospitalStaff %}
                         <b>{{ reading.hospitalStaff.email }}
                             {% if user and user.user_id() == reading.hospitalStaff.identity %}
@@ -93,7 +94,7 @@
                         </b>
                         {% else %}
                         an anonymous person
-                        {% endif %}
+                        {% endif %}-->
                     </td>
                     <td> <!-- Date -->
                         {{ reading.date}}
