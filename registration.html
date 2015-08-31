@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title> Patient Information </title>
+
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+
+		<!-- This is my CSS file -->
+		<link rel="stylesheet" href="main1.css">
+	</head>
+	<body>
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-6">
+					<h1> Patient's Information </h1>
+					<form action="" method="">
+						<div class="form-group">
+							<label for="name"> Name </label>
+							<input type="name" class="form-control" id="name">
+						</div> 
+						<div class="form-group">
+							<label for="nric"> NRIC </label>
+							<input type="nric" class="form-control" id="nric">
+						</div> 
+						<p> <input type="radio" name="gender" value="male"> Male <input type="radio" name="gender" value="female"> Female </p>
+						<p> <input type="radio" name="nationality" value="singaporean"> Singaporean <input type="radio" name="nationality" value="pr"> PR </p>
+						<!-- Insert dropdown for country of birth -->
+						<br/>
+						<div class="form-group">
+							<label for="dob"> Date of Birth </label>
+							<input type="dob" class="form-control" id="dob">
+						</div> 
+						<div class="form-group">
+							<label for="race"> Race </label>
+							<input type="race" class="form-control" id="race">
+						</div> 
+						<div class="form-group">
+							<label for="hp"> Mobile Number </label>
+							<input type="hp" class="form-control" id="hp">
+						</div> 
+						<div class="form-group">
+							<label for="address"> Address </label>
+							<input type="address" class="form-control" id="address">
+						</div> 
+						<div class="form-group">
+							<label for="addinfo"> Additional Information </label>
+							<input type="addinfo" class="form-control" id="addinfo">
+						</div> 
+						<button class="btn btn-primary" type="submit" value="submit"> Submit </button>
+						<button class="btn btn-danger pull-right" type="button"> Cancel </button>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<!-- JavaScript files should be linked at the bottom of the page -->
+		<script src="js/jquery.min.js"></script>
+
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="js/bootstrap.min.js"></script>
+	</body>
+</html>
