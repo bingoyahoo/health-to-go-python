@@ -134,8 +134,12 @@ class Create(webapp2.RequestHandler):
 
 class Triage(webapp2.RequestHandler):
     def get(self):
+        nric_num = self.request.get('nric_num')
+        template_values = {
+            'nric_num': "wahahaha"
+        }
         template = JINJA_ENVIRONMENT.get_template('triage.html')
-        self.response.write(template.render())
+        self.response.write(template.render(template_values))
 
 class Faq(webapp2.RequestHandler):
     def get(self):
