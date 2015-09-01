@@ -53,6 +53,9 @@ class PatientProfile(ndb.Model):
     temperature = ndb.StringProperty(indexed=False)
     heartrate = ndb.StringProperty(indexed=False)
     date = ndb.DateTimeProperty(auto_now_add=True)
+    travel_history = ndb.StringProperty(indexed=False)
+    chief_complaint = ndb.StringProperty(indexed=False)
+    classification = ndb.StringProperty(indexed=False)
 
 
 class MainPage(webapp2.RequestHandler):
@@ -62,6 +65,13 @@ class MainPage(webapp2.RequestHandler):
 
 
 class ListAll(webapp2.RequestHandler):
+    def post(self):
+        nric_num = self.request.get('nric_num')
+        # nric_num = "123"
+        self.redirect("/triage?nric=" + nric_num)
+        # template = JINJA_ENVIRONMENT.get_template('triage.html')
+        # self.response.write(template.render())
+
     def get(self):
         hospital_name = self.request.get('hospital_name',
                                          DEFAULT_HOSPITAL_NAME)
@@ -85,7 +95,7 @@ class ListAll(webapp2.RequestHandler):
             'url_linktext': url_linktext,
         }
 
-        template = JINJA_ENVIRONMENT.get_template('listall_san.html')
+        template = JINJA_ENVIRONMENT.get_template('listall.html')
         self.response.write(template.render(template_values))
 
 class Create(webapp2.RequestHandler):
@@ -134,9 +144,12 @@ class Create(webapp2.RequestHandler):
 
 class Triage(webapp2.RequestHandler):
     def get(self):
-        nric_num = self.request.get('nric_num')
+        nric_num = self.request.get('nric')
+        readings = PatientProfile.query(PatientProfile.nric_num== nric_num)
+
         template_values = {
-            'nric_num': "wahahaha"
+            'nric_num': nric_num,
+            'readings': readings
         }
         template = JINJA_ENVIRONMENT.get_template('triage.html')
         self.response.write(template.render(template_values))

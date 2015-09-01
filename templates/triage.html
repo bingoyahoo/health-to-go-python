@@ -61,10 +61,13 @@
 			<div class="row">
 				<div class="col-xs-6">
 					<h1> Patient's Information </h1>
+
+					{% for reading in readings %}
+
 					<form action="" method="">
 						<div class="form-group">
 							<label for="name"> Name </label>
-							<input type="name" class="form-control" id="name">
+							<input type="name" class="form-control" id="name" value="{{reading.name}}">
 						</div> 
 						<div class="form-group">
 							<label for="nric"> NRIC </label>
@@ -76,33 +79,33 @@
 						<br/>
 						<div class="form-group">
 							<label for="dob"> Date of Birth </label>
-							<input type="dob" class="form-control" id="dob">
+							<input type="dob" class="form-control" id="dob" value="{{reading.dob}}">
 						</div> 
 						<div class="form-group">
 							<label for="race"> Race </label>
-							<input type="race" class="form-control" id="race">
+							<input type="race" class="form-control" id="race" value="{{reading.race}}">
 						</div> 
 						<div class="form-group">
 							<label for="hp"> Mobile Number </label>
-							<input type="hp" class="form-control" id="hp">
+							<input type="hp" class="form-control" id="hp" value="{{reading.mobile_number}}">
 						</div> 
 						<div class="form-group">
 							<label for="address"> Address </label>
-							<input type="address" class="form-control" id="address">
+							<input type="address" class="form-control" id="address" value="{{reading.address}}">
 						</div> 
 						<div class="form-group">
 							<label for="addinfo"> Additional Information </label>
-							<input type="addinfo" class="form-control" id="addinfo">
+							<input type="addinfo" class="form-control" id="addinfo" value="{{reading.add_info}}">
 						</div> 
 					</form>
 				</div>
 				<div class="col-xs-6">
 					<h1> Triage Information </h1>
 					<p><b>Travel history</b> </p>
-					<textarea class="form-control" rows="2"></textarea>
+					<textarea class="form-control" rows="2" value="{{reading.travel_history}}"></textarea>
 					<br/>
 					<p><b> Chief Complaint </b> </p>
-					<textarea class="form-control" rows="2"></textarea>
+					<textarea class="form-control" rows="2" value="{{reading.chief_complaint}}"></textarea>
 					<br/>
 						<!-- Pain Score Slider! -->
 					<table class="table table-hover table-bordered">
@@ -128,6 +131,8 @@
 					<button class="btn btn-primary" type="submit" value="submit"> Submit </button>
 					<button class="btn btn-danger" type="button"> Cancel </button>
 				</div>
+
+				{% endfor %}
 			</div>
 		</div>
 

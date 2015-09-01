@@ -1,24 +1,16 @@
-/**
- * Created by Delvin on 30/8/2015.
- */
-
 jQuery(document).ready(function($) {
 
     $(".clickable-row").click(function() {
 
-        window.document.location = $(this).data("url"),
+         var item = $(this).find(".nric_field")     // Gets a descendent with class="nr"
+                       .text();
+        $("#nric_num").val(item.trim());
+        $("#hidden-form").submit();
+        /*window.location.href = $(this).data("url"),
             {
-          nric_num: "S8888888A"
-         }
+              nric_num: $item
+            }*/
+
+        // $.post( "/listall", { nric_field: "123456"} );
     });
 });
-/*jQuery(document).ready(function($) {
-
-    $(".clickable-row").click(function() {
-$.post($(this).data("url"), {
-    nric_num: "S8888888A"
-    //selected_country_name: $('#id_country_name').val(),
-    //selected_city_name: $('#id_city_name').val()
-});
-         });
-});*/

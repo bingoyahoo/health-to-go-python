@@ -80,7 +80,7 @@
                         {{ loop.index }}
                     </td>
 
-                    <td id="nric_field"> <!-- Nric -->
+                    <td class="nric_field"> <!-- Nric -->
                         {{ reading.nric_num}}
                     </td>
                     <td>
@@ -108,6 +108,9 @@
     </div>
 </div>
 
+<form style="display:none" action="/listall" method="POST" id="hidden-form">
+  <input type="hidden" id="nric_num" name="nric_num" value=""/>
+</form>
 
 <!-- JavaScript files should be linked at the bottom of the page -->
 <script src="/bootstrap/js/jquery.min.js"></script>
