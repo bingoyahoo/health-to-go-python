@@ -63,3 +63,7 @@ form label {
 tr.clickable-row {
     cursor: pointer;
 }
+
+form label {
+    width: 200px;
+}
