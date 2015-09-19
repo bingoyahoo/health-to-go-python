@@ -1,9 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
-<body>
 <div class="container">
     <h1>Create a Patient entry</h1>
-
     <form action="/create?hospital_name={{ hospital_name }}" method="post">
         <div>NRIC: <input type="text" name="nricNum" placeholder="S1234567A"></div>
         <div>Temperature: <input type="text" name="temperature" placeholder="37"></div>
@@ -11,5 +9,4 @@
         <div><input type="submit" value="Save Form"></div>
     </form>
 </div>
-</body>
 {% endblock %}

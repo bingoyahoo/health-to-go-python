@@ -55,7 +55,7 @@ class PatientProfile(ndb.Model):
     date = ndb.DateTimeProperty(auto_now_add=True)
     travel_history = ndb.StringProperty(indexed=False)
     chief_complaint = ndb.StringProperty(indexed=False)
-    classification = ndb.StringProperty(indexed=False)
+    classification = ndb.IntegerProperty(indexed=False, default=3)
 
 
 class MainPage(webapp2.RequestHandler):
@@ -67,10 +67,7 @@ class MainPage(webapp2.RequestHandler):
 class ListAll(webapp2.RequestHandler):
     def post(self):
         nric_num = self.request.get('nric_num')
-        # nric_num = "123"
         self.redirect("/triage?nric=" + nric_num)
-        # template = JINJA_ENVIRONMENT.get_template('triage.html')
-        # self.response.write(template.render())
 
     def get(self):
         hospital_name = self.request.get('hospital_name',
@@ -104,8 +101,8 @@ class Create(webapp2.RequestHandler):
         self.response.write(template.render())
 
     def post(self):
-        # We set the same parent key on the 'Greeting' to ensure each
-        # Greeting is in the same entity group. Queries across the
+        # We set the same parent key on the 'PatientProfile' to ensure each
+        # PatientProfile is in the same entity group. Queries across the
         # single entity group will be consistent. However, the write
         # rate to a single entity group should be limited to
         # ~1/second.

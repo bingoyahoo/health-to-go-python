@@ -1,10 +1,53 @@
+.navbar-inverse {
+    background-color: #193441;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.navbar-inverse .navbar-brand {
+    color: #ffffff;
+}
+
 body {
     padding-top: 70px;
     padding-bottom: 40px;
-    background-color: #fff;
+    background: #F2F2F2 none repeat scroll 0% 0%;
     font-size: 17px;
+    font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
 }
 
+/* for Faq page */
+div.page-content {
+    background: #FCFFF5 none repeat scroll 0% 0%;
+    border-radius: 10px;
+    padding: 10px 40px;
+    float: left;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+ul#markdown-toc {
+    margin: 30px 0px 0px;
+    overflow: hidden;
+    list-style: outside none none;
+}
+ul#markdown-toc > li a{
+    font-weight: bold;
+}
+ul#markdown-toc > li li a {
+    margin: 0px 20px 10px 0px;
+    font-weight: normal;
+}
+
+ul#markdown-toc > li ul li{
+    list-style: outside none none;
+    line-height: 2;
+}
+
+aside.sidebar {
+    float: right;
+    width: 220px;
+}
+
+/* For Main page */
 .jumbotron {
     margin-top: 0px;
 }
@@ -66,4 +109,8 @@ tr.clickable-row {
 
 form label {
     width: 200px;
+}
+
+.form-instructions{
+    color: #888888;
 }
