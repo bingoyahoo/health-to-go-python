@@ -1,88 +1,87 @@
 {% extends "layout.html" %}
 {% block body %}
-	<body>
-		<div class="container">
-			<div class="row">
-				<div class="col-xs-6">
-					<h1> Patient's Information </h1>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-6">
+            <h1> Patient's Information </h1>
 
-					{% for reading in readings %}
+            {% for reading in readings %}
 
-					<form action="" method="">
-						<div class="form-group">
-							<label for="name"> Name </label>
-							<input type="name" class="form-control" id="name" value="{{reading.name}}">
-						</div> 
-						<div class="form-group">
-							<label for="nric"> NRIC </label>
-							<input type="nric" class="form-control" id="nric" value="{{nric_num}}">
-						</div> 
-						<p> <input type="radio" name="gender" value="male"> Male <input type="radio" name="gender" value="female"> Female </p>
-						<p> <input type="radio" name="nationality" value="singaporean"> Singaporean <input type="radio" name="nationality" value="pr"> PR </p>
-						<!-- Insert dropdown for country of birth -->
-						<div class="form-group">
-							<label for="dob"> Date of Birth </label>
-							<input type="dob" class="form-control" id="dob" value="{{reading.dob}}">
-						</div> 
-						<div class="form-group">
-							<label for="race"> Race </label>
-							<input type="race" class="form-control" id="race" value="{{reading.race}}">
-						</div> 
-						<div class="form-group">
-							<label for="hp"> Mobile Number </label>
-							<input type="tel" class="form-control" id="hp" value="{{reading.mobile_number}}">
-						</div> 
-						<div class="form-group">
-							<label for="address"> Address </label>
-							<input type="address" class="form-control" id="address" value="{{reading.address}}">
-						</div> 
-						<div class="form-group">
-							<label for="addinfo"> Additional Information </label>
-							<input type="addinfo" class="form-control" id="addinfo" value="{{reading.add_info}}">
-						</div> 
-					</form>
-				</div>
-				<div class="col-xs-6">
-					<h1> Triage Information </h1>
-					<p><b>Travel history</b> </p>
-					<textarea class="form-control" rows="2" value="{{reading.travel_history}}"></textarea>
-					<br/>
-					<p><b> Chief Complaint </b> </p>
-					<textarea class="form-control" rows="2" value="{{reading.chief_complaint}}"></textarea>
-					<br/>
-						<!-- Pain Score Slider! -->
-					<table class="table table-hover table-bordered">
-						<tr class="active">
-							<th>Heart Rate</th>
-							<th>Oxygen Saturation</th>
-							<th>Temperature</th>
-							<th>Blood Pressure</th>
-						</tr>
-						<tr>
-							<td>-</td>
-							<td>-</td>
-							<td>-</td>
-							<td>-</td>
-						</tr>
-					</table>
-					<p><b> Recommended Patient Classification </b></p>
-					<p> <input type="radio" name="priority" value="one"> P1 <br/>
-					<input type="radio" name="priority" value="two"> P2 <br/>
-					<input type="radio" name="priority" value="three"> P3 <br/>
-					<input type="radio" name="priority" value="four"> P4 <br/>
-					</p>
-					<button class="btn btn-primary" type="submit" value="save"> Save </button>
-					<button class="btn btn-danger" type="button"> Cancel </button>
-				</div>
+            <form action="" method="">
+                <div class="form-group">
+                    <label for="name"> Name </label>
+                    <input type="name" class="form-control" id="name" value="{{reading.name}}">
+                </div>
+                <div class="form-group">
+                    <label for="nric"> NRIC </label>
+                    <input type="nric" class="form-control" id="nric" value="{{nric_num}}">
+                </div>
+                <p><input type="radio" name="gender" value="male"> Male <input type="radio" name="gender"
+                                                                               value="female"> Female </p>
 
-				{% endfor %}
-			</div>
-		</div>
+                <p><input type="radio" name="nationality" value="singaporean"> Singaporean <input type="radio"
+                                                                                                  name="nationality"
+                                                                                                  value="pr"> PR </p>
+                <!-- Insert dropdown for country of birth -->
+                <div class="form-group">
+                    <label for="dob"> Date of Birth </label>
+                    <input type="dob" class="form-control" id="dob" value="{{reading.dob}}">
+                </div>
+                <div class="form-group">
+                    <label for="race"> Race </label>
+                    <input type="race" class="form-control" id="race" value="{{reading.race}}">
+                </div>
+                <div class="form-group">
+                    <label for="hp"> Mobile Number </label>
+                    <input type="tel" class="form-control" id="hp" value="{{reading.mobile_number}}">
+                </div>
+                <div class="form-group">
+                    <label for="address"> Address </label>
+                    <input type="address" class="form-control" id="address" value="{{reading.address}}">
+                </div>
+                <div class="form-group">
+                    <label for="addinfo"> Additional Information </label>
+                    <input type="addinfo" class="form-control" id="addinfo" value="{{reading.add_info}}">
+                </div>
+            </form>
+        </div>
+        <div class="col-xs-6">
+            <h1> Triage Information </h1>
 
-		<!-- JavaScript files should be linked at the bottom of the page -->
-		<script src="js/jquery.min.js"></script>
+            <p><b>Travel history</b></p>
+            <textarea class="form-control" rows="2" value="{{reading.travel_history}}"></textarea>
+            <br/>
 
-		<!-- Latest compiled and minified JavaScript -->
-		<script src="js/bootstrap.min.js"></script>
-	</body>
+            <p><b> Chief Complaint </b></p>
+            <textarea class="form-control" rows="2" value="{{reading.chief_complaint}}"></textarea>
+            <br/>
+            <!-- Pain Score Slider! -->
+            <table class="table table-hover table-bordered">
+                <tr class="active">
+                    <th>Heart Rate</th>
+                    <th>Oxygen Saturation</th>
+                    <th>Temperature</th>
+                    <th>Blood Pressure</th>
+                </tr>
+                <tr>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            </table>
+            <p><b> Recommended Patient Classification </b></p>
+
+            <p><input type="radio" name="priority" value="one"> P1 <br/>
+                <input type="radio" name="priority" value="two"> P2 <br/>
+                <input type="radio" name="priority" value="three"> P3 <br/>
+                <input type="radio" name="priority" value="four"> P4 <br/>
+            </p>
+            {% endfor %}
+            <button class="btn btn-primary" type="submit" value="save"> Save</button>
+            <button id="cancel-triage" class="btn btn-danger confirmation-callback" > Cancel</button>
+        </div>
+
+    </div>
+</div>
 {% endblock %}

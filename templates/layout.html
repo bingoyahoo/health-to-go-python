@@ -62,5 +62,26 @@
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <!-- DataTables -->
 <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.9/js/jquery.dataTables.js"></script>
+<!-- Bootstrap confirmation plugin-->
+<script type="text/javascript" src="bootstrap/js/bootstrap-confirmation.js"></script>
+
+<script>
+	$(function() {
+		$('body').confirmation({
+			selector: '[data-toggle="confirmation"]',
+            btnOkLabel: '<i class="icon-ok-sign icon-white"></i> Yes'
+		});
+
+		$('.confirmation-callback').confirmation({
+			onConfirm: function() { window.location = "/listall"; },
+			onCancel: function() {},
+            btnOkLabel: '<i class="icon-ok-sign icon-white"></i> Yes',
+            title: "Discard changes?"
+		});
+
+
+	});
+	</script>
+
 </body>
 </html>
