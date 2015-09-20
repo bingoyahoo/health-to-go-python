@@ -42,7 +42,7 @@ class PatientProfile(ndb.Model):
     # Profile information
     name = ndb.StringProperty()
     nric_num = ndb.StringProperty()
-    gender = ndb.StringProperty(indexed=False)
+    gender = ndb.StringProperty(indexed=False, choices=set(["male", "female"]))
     nationality = ndb.StringProperty(indexed=False)
     dob = ndb.StringProperty(indexed=False)
     race = ndb.StringProperty(indexed=False)
@@ -73,8 +73,8 @@ class ListAll(webapp2.RequestHandler):
         hospital_name = self.request.get('hospital_name',
                                          DEFAULT_HOSPITAL_NAME)
         readings_query = PatientProfile.query(
-            ancestor=hospital_key(hospital_name)).order(-PatientProfile.date)
-        readings = readings_query.fetch(10)
+            ancestor=hospital_key(hospital_name)).order(PatientProfile.date)
+        readings = readings_query.fetch(100)
 
         user = users.get_current_user()
         if user:
@@ -106,7 +106,8 @@ class Create(webapp2.RequestHandler):
         # single entity group will be consistent. However, the write
         # rate to a single entity group should be limited to
         # ~1/second.
-        reading = PatientProfile(parent=hospital_key(DEFAULT_HOSPITAL_NAME))
+        patient_nric = self.request.get('nricNum')
+        reading = PatientProfile( id=patient_nric, parent=hospital_key(DEFAULT_HOSPITAL_NAME))
 
         if users.get_current_user():
             reading.hospitalStaff = HospitalStaff(
@@ -114,13 +115,13 @@ class Create(webapp2.RequestHandler):
                 email=users.get_current_user().email())
 
         patient_name = self.request.get('name')
-        patient_nric = self.request.get('nricNum')
         patient_gender = self.request.get('gender')
         patient_dob = self.request.get('dob')
         patient_race = self.request.get('race')
         patient_mobile_num = self.request.get('mobile_number')
         patient_address = self.request.get('address')
         patient_add_info = self.request.get('add_info')
+        patient_nationality = self.request.get('nationality')
 
         # Do some input validation before putting data into Datastore
         if patient_nric.isalnum() and len(patient_nric) == 9 :
@@ -132,6 +133,7 @@ class Create(webapp2.RequestHandler):
             reading.mobile_number = patient_mobile_num
             reading.address = patient_address
             reading.add_info = patient_add_info
+            reading.nationality = patient_nationality
             reading.put()
 
         query_params = {'hospital_name': DEFAULT_HOSPITAL_NAME}

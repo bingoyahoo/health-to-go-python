@@ -106,6 +106,10 @@ form label {
     background-color: #89CFF0;
 }
 
+table .hover{
+    background-color: #89CFF0;
+}
+
 tr.clickable-row {
     cursor: pointer;
 }

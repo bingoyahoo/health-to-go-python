@@ -16,12 +16,27 @@
                     <label for="nric"> NRIC </label>
                     <input type="nric" class="form-control" id="nric" value="{{nric_num}}">
                 </div>
-                <p><input type="radio" name="gender" value="male"> Male <input type="radio" name="gender"
-                                                                               value="female"> Female </p>
-
-                <p><input type="radio" name="nationality" value="singaporean"> Singaporean <input type="radio"
-                                                                                                  name="nationality"
-                                                                                                  value="pr"> PR </p>
+                <p>
+                    {% if reading.gender == "male" %}
+                    <input type="radio" name="gender" value="male" checked> Male
+                    <input type="radio" name="gender" value="female"> Female
+                    {% else %}
+                    <input type="radio" name="gender" value="male"> Male
+                    <input type="radio" name="gender" value="female" checked> Female
+                    {% endif %}
+                </p>
+                <p>
+                    {% if reading.nationality == "singaporean" %}
+                    <input type="radio" name="nationality" value="singaporean" checked> Singaporean
+                    <input type="radio" name="nationality" value="pr"> PR
+                    {% elif reading.nationality == "pr" %}
+                    <input type="radio" name="nationality" value="singaporean"> Singaporean
+                    <input type="radio" name="nationality" value="pr" checked> PR
+                    {% else %}
+                    <input type="radio" name="nationality" value="singaporean"> Singaporean
+                    <input type="radio" name="nationality" value="pr"> PR
+                    {% endif %}
+                    </p>
                 <!-- Insert dropdown for country of birth -->
                 <div class="form-group">
                     <label for="dob"> Date of Birth </label>
@@ -72,10 +87,10 @@
             </table>
             <p><b> Recommended Patient Classification </b></p>
 
-            <p><input type="radio" name="priority" value="one"> P1 <br/>
-                <input type="radio" name="priority" value="two"> P2 <br/>
-                <input type="radio" name="priority" value="three"> P3 <br/>
-                <input type="radio" name="priority" value="four"> P4 <br/>
+            <p><input type="radio" name="priority" value="1"> P1 <br/>
+                <input type="radio" name="priority" value="2"> P2 <br/>
+                <input type="radio" name="priority" value="3"> P3 <br/>
+                <input type="radio" name="priority" value="4"> P4 <br/>
             </p>
             {% endfor %}
             <button class="btn btn-primary" type="submit" value="save"> Save</button>
