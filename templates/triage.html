@@ -84,4 +84,15 @@
 
     </div>
 </div>
+
+<script>
+	$(function() {
+		$('.confirmation-callback').confirmation({
+			onConfirm: function() { window.location = "/listall"; },
+			onCancel: function() {},
+            btnOkLabel: '<i class="icon-ok-sign icon-white"></i> Yes',
+            title: "Discard changes?"
+		});
+	});
+	</script>
 {% endblock %}
