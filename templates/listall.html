@@ -37,7 +37,7 @@
                         {% endif %}-->
                     </td>
                     <td> <!-- Date -->
-                        {{ reading.date}}
+                        {{ reading.date|datetimeformat }}
                     </td>
                     <td>
                         {% if reading.temperature is none %}

@@ -1,6 +1,7 @@
 import cgi
 import urllib
 import os
+import pytz
 
 from google.appengine.api import users
 from google.appengine.ext import ndb
@@ -14,8 +15,12 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
-DEFAULT_HOSPITAL_NAME = 'SGH'
+def datetimeformat(value, format='%H:%M:%S / %d-%m-%Y'):
+    return value.strftime(format)
 
+JINJA_ENVIRONMENT.filters['datetimeformat'] = datetimeformat
+
+DEFAULT_HOSPITAL_NAME = 'SGH'
 
 # We set a parent key on the 'Greetings' to ensure that they are all
 # in the same entity group. Queries across the single entity group
@@ -83,6 +88,11 @@ class ListAll(webapp2.RequestHandler):
         else:
             url = users.create_login_url(self.request.uri)
             url_linktext = 'Login'
+
+        local_tz = pytz.timezone('Asia/Singapore')
+        for reading in readings:
+            dt = reading.date
+            reading.date = dt.replace(tzinfo=pytz.utc).astimezone(local_tz).replace(tzinfo=None)
 
         template_values = {
             'user': user,
