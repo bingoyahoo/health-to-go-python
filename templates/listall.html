@@ -58,6 +58,16 @@
                     </td>
                 </tr>
                 {% endfor %}
+                 <!--  <tfoot>
+                <tr>
+                    <th>ID</th>
+                    <th>NRIC</th>
+                    <th>Name</th>
+                    <th>Registration Time</th>
+                    <th>Triage Data</th>
+                    <th>Classification</th>
+                </tr>
+                </tfoot>-->
             </table>
         </div>
     </div>
@@ -75,14 +85,10 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="/bootstrap/js/bootstrap.min.js"></script>
 
-<!-- DataTables CSS -->
-
-<script type="text/javascript" src="https://cdn.datatables.net/r/dt/dt-1.10.9/datatables.min.js"></script>
-
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function() {
     $('#table_id').DataTable( {
-        "order": [[ 2, "desc" ]]
+        "order": [[ 2, "asc" ]]
     } );
 } );
 </script>
