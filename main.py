@@ -153,6 +153,53 @@ class Triage(webapp2.RequestHandler):
         template = JINJA_ENVIRONMENT.get_template('triage.html')
         self.response.write(template.render(template_values))
 
+    def post(self):
+        # We set the same parent key on the 'PatientProfile' to ensure each
+        # PatientProfile is in the same entity group. Queries across the
+        # single entity group will be consistent. However, the write
+        # rate to a single entity group should be limited to
+        # ~1/second.
+        patient_nric = self.request.get('nric')
+        reading = PatientProfile( id=patient_nric, parent=hospital_key(DEFAULT_HOSPITAL_NAME))
+
+        if users.get_current_user():
+            reading.hospitalStaff = HospitalStaff(
+                identity=users.get_current_user().user_id(),
+                email=users.get_current_user().email())
+
+        patient_name = self.request.get('name')
+        patient_gender = self.request.get('gender')
+        patient_dob = self.request.get('dob')
+        patient_race = self.request.get('race')
+        patient_mobile_num = self.request.get('mobile_number')
+        patient_address = self.request.get('address')
+        patient_add_info = self.request.get('add_info')
+        patient_nationality = self.request.get('nationality')
+        # Get triage information
+        patient_travel_history = self.request.get('travel_history')
+        patient_chief_complaint = self.request.get('chief_complaint')
+        patient_classification = self.request.get('classification')
+
+        # Do some input validation before putting data into Datastore
+        if patient_nric.isalnum() and len(patient_nric) == 9 :
+            reading.name = patient_name
+            reading.nric_num = patient_nric
+            reading.gender = patient_gender
+            reading.dob = patient_dob
+            reading.race = patient_race
+            reading.mobile_number = patient_mobile_num
+            reading.address = patient_address
+            reading.add_info = patient_add_info
+            reading.nationality = patient_nationality
+            # Add triage information into database
+            reading.travel_history = patient_travel_history
+            reading.chief_complaint= patient_chief_complaint
+            reading.classification = int(patient_classification)
+            reading.put()
+
+        query_params = {'hospital_name': DEFAULT_HOSPITAL_NAME}
+        self.redirect("listall")
+
 class Faq(webapp2.RequestHandler):
     def get(self):
         template = JINJA_ENVIRONMENT.get_template('faq.html')

@@ -2,19 +2,19 @@
 {% block body %}
 <div class="container">
     <div class="row">
-        <div class="col-xs-6">
-            <h1> Patient's Information </h1>
+        <form action="/triage" method="post" role="form">
+            <div class="col-xs-6">
+                <h1> Patient's Information </h1>
 
-            {% for reading in readings %}
+                {% for reading in readings %}
 
-            <form action="" method="">
                 <div class="form-group">
                     <label for="name"> Name </label>
-                    <input type="name" class="form-control" id="name" value="{{reading.name}}">
+                    <input type="text" class="form-control" id="name" name="name" value="{{reading.name}}">
                 </div>
                 <div class="form-group">
                     <label for="nric"> NRIC </label>
-                    <input type="nric" class="form-control" id="nric" value="{{nric_num}}">
+                    <input type="text" class="form-control" id="nric" name="nric" value="{{nric_num}}">
                 </div>
                 <p>
                     {% if reading.gender == "male" %}
@@ -25,6 +25,7 @@
                     <input type="radio" name="gender" value="female" checked> Female
                     {% endif %}
                 </p>
+
                 <p>
                     {% if reading.nationality == "singaporean" %}
                     <input type="radio" name="nationality" value="singaporean" checked> Singaporean
@@ -36,78 +37,112 @@
                     <input type="radio" name="nationality" value="singaporean"> Singaporean
                     <input type="radio" name="nationality" value="pr"> PR
                     {% endif %}
-                    </p>
+                </p>
                 <!-- Insert dropdown for country of birth -->
                 <div class="form-group">
                     <label for="dob"> Date of Birth </label>
-                    <input type="dob" class="form-control" id="dob" value="{{reading.dob}}">
+                    <input type="text" class="form-control" name="dob" id="dob" value="{{reading.dob}}">
                 </div>
                 <div class="form-group">
                     <label for="race"> Race </label>
-                    <input type="race" class="form-control" id="race" value="{{reading.race}}">
+                    <input type="text" class="form-control" name="race" id="race" value="{{reading.race}}">
                 </div>
                 <div class="form-group">
-                    <label for="hp"> Mobile Number </label>
-                    <input type="tel" class="form-control" id="hp" value="{{reading.mobile_number}}">
+                    <label for="mobile_number"> Mobile Number </label>
+                    <input type="tel" class="form-control" name="mobile_number" id="mobile_number" value="{{reading.mobile_number}}">
                 </div>
                 <div class="form-group">
                     <label for="address"> Address </label>
-                    <input type="address" class="form-control" id="address" value="{{reading.address}}">
+                    <input type="text" class="form-control" name="address" id="address" value="{{reading.address}}">
                 </div>
                 <div class="form-group">
-                    <label for="addinfo"> Additional Information </label>
-                    <input type="addinfo" class="form-control" id="addinfo" value="{{reading.add_info}}">
+                    <label for="add_info"> Additional Information </label>
+                    <input type="text" class="form-control" name="add_info" id="add_info" value="{{reading.add_info}}">
                 </div>
-            </form>
-        </div>
-        <div class="col-xs-6">
-            <h1> Triage Information </h1>
+            </div>
+            <div class="col-xs-6">
+                <h1> Triage Information </h1>
 
-            <p><b>Travel history</b></p>
-            <textarea class="form-control" rows="2" value="{{reading.travel_history}}"></textarea>
-            <br/>
+                <p><b>Travel history</b></p>
 
-            <p><b> Chief Complaint </b></p>
-            <textarea class="form-control" rows="2" value="{{reading.chief_complaint}}"></textarea>
-            <br/>
-            <!-- Pain Score Slider! -->
-            <table class="table table-hover table-bordered">
-                <tr class="active">
-                    <th>Heart Rate</th>
-                    <th>Oxygen Saturation</th>
-                    <th>Temperature</th>
-                    <th>Blood Pressure</th>
-                </tr>
-                <tr>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                </tr>
-            </table>
-            <p><b> Recommended Patient Classification </b></p>
+                    {% if reading.travel_history is none %}
+                    <textarea class="form-control" name="travel_history" rows="2"></textarea>
+                    {% else %}
+                    <textarea class="form-control" name="travel_history" id="travel_history" rows="2">{{ reading.travel_history }}</textarea>
+                    {% endif %}
+                <br/>
 
-            <p><input type="radio" name="priority" value="1"> P1 <br/>
-                <input type="radio" name="priority" value="2"> P2 <br/>
-                <input type="radio" name="priority" value="3"> P3 <br/>
-                <input type="radio" name="priority" value="4"> P4 <br/>
-            </p>
-            {% endfor %}
-            <button class="btn btn-primary" type="submit" value="save"> Save</button>
-            <button id="cancel-triage" class="btn btn-danger confirmation-callback" > Cancel</button>
-        </div>
+                <p><b> Chief Complaint </b></p>
+                {% if reading.chief_complaint is none %}
+                <textarea class="form-control" name="chief_complaint" rows="2"></textarea>
+                {% else %}
+                <textarea class="form-control" name="chief_complaint" id ="chief_complaint" rows="2">{{ reading.chief_complaint }}</textarea>
+                {% endif %}
+                <br/>
+                <!-- Pain Score Slider! -->
+                <table class="table table-hover table-bordered">
+                    <tr class="active">
+                        <th>Heart Rate</th>
+                        <th>Oxygen Saturation</th>
+                        <th>Temperature</th>
+                        <th>Blood Pressure</th>
+                    </tr>
+                    <tr>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                </table>
+                <p><b> Recommended Patient Classification </b></p>
 
+                <p>
+                    {% if reading.classification == 1 %}
+                    <input type="radio" name="classification" value="1" checked> P1 <br/>
+                    <input type="radio" name="classification" value="2"> P2 <br/>
+                    <input type="radio" name="classification" value="3"> P3 <br/>
+                    <input type="radio" name="classification" value="4"> P4 <br/>
+                    {% elif reading.classification == 2 %}
+                    <input type="radio" name="classification" value="1"> P1 <br/>
+                    <input type="radio" name="classification" value="2" checked> P2 <br/>
+                    <input type="radio" name="classification" value="3"> P3 <br/>
+                    <input type="radio" name="classification" value="4"> P4 <br/>
+                    {% elif reading.classification == 3 %}
+                    <input type="radio" name="classification" value="1"> P1 <br/>
+                    <input type="radio" name="classification" value="2"> P2 <br/>
+                    <input type="radio" name="classification" value="3" checked> P3 <br/>
+                    <input type="radio" name="classification" value="4"> P4 <br/>
+                    {% elif reading.classification == 4 %}
+                    <input type="radio" name="classification" value="1"> P1 <br/>
+                    <input type="radio" name="classification" value="2"> P2 <br/>
+                    <input type="radio" name="classification" value="3"> P3 <br/>
+                    <input type="radio" name="classification" value="4" checked> P4 <br/>
+                    {% else %}
+                    <input type="radio" name="classification" value="1"> P1 <br/>
+                    <input type="radio" name="classification" value="2"> P2 <br/>
+                    <input type="radio" name="classification" value="3"> P3 <br/>
+                    <input type="radio" name="classification" value="4"> P4 <br/>
+                    {% endif %}
+                </p>
+                {% endfor %}
+                <button class="btn btn-primary" type="submit" value="save"> Save</button>
+                <button id="cancel-triage" class="btn btn-danger confirmation-callback"> Cancel</button>
+            </div>
+        </form>
     </div>
 </div>
 
 <script>
-	$(function() {
-		$('.confirmation-callback').confirmation({
-			onConfirm: function() { window.location = "/listall"; },
-			onCancel: function() {},
+    $(function () {
+        $('.confirmation-callback').confirmation({
+            onConfirm: function () {
+                window.location = "/listall";
+            },
+            onCancel: function () {
+            },
             btnOkLabel: '<i class="icon-ok-sign icon-white"></i> Yes',
             title: "Discard changes?"
-		});
-	});
-	</script>
+        });
+    });
+</script>
 {% endblock %}
