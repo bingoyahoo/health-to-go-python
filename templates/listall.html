@@ -16,26 +16,10 @@
                 </thead>
                 {% for reading in readings %}
                 <tr class="clickable-row" data-url="/triage">
-                    <td>
-                        {{ loop.index }}
-                    </td>
+                    <td>{{ loop.index }}</td>
 
-                    <td class="nric_field"> <!-- Nric -->
-                        {{ reading.nric_num}}
-                    </td>
-                    <td>
-                        {{ reading.name}}
-                      <!--  Created by
-                        {% if reading.hospitalStaff %}
-                        <b>{{ reading.hospitalStaff.email }}
-                            {% if user and user.user_id() == reading.hospitalStaff.identity %}
-                            (you)
-                            {% endif %}
-                        </b>
-                        {% else %}
-                        an anonymous person
-                        {% endif %}-->
-                    </td>
+                    <td class="nric_field"> <!-- Nric -->{{ reading.nric_num}}</td>
+                    <td>{{ reading.name}}</td>
                     <td> <!-- Date -->
                         {{ reading.date|datetimeformat }}
                     </td>
