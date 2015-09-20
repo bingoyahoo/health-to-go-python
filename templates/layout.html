@@ -67,19 +67,12 @@
 
 <script>
 	$(function() {
-		$('body').confirmation({
-			selector: '[data-toggle="confirmation"]',
-            btnOkLabel: '<i class="icon-ok-sign icon-white"></i> Yes'
-		});
-
 		$('.confirmation-callback').confirmation({
 			onConfirm: function() { window.location = "/listall"; },
 			onCancel: function() {},
             btnOkLabel: '<i class="icon-ok-sign icon-white"></i> Yes',
             title: "Discard changes?"
 		});
-
-
 	});
 	</script>
 
