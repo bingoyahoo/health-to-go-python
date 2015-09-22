@@ -15,7 +15,7 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
-def datetimeformat(value, format='%H:%M:%S / %d-%m-%Y'):
+def datetimeformat(value, format='%H:%M:%S (%d-%m-%Y)'):
     return value.strftime(format)
 
 JINJA_ENVIRONMENT.filters['datetimeformat'] = datetimeformat
