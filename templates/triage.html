@@ -2,7 +2,7 @@
 {% block body %}
 <div class="container">
     <div class="row">
-        <form action="/triage" method="post" role="form">
+        <form action="/triage" method="post" role="form" id="triage-form">
             <div class="col-xs-6">
                 <h1> Patient's Information </h1>
 
@@ -49,7 +49,8 @@
                 </div>
                 <div class="form-group">
                     <label for="mobile_number"> Mobile Number </label>
-                    <input type="tel" class="form-control" name="mobile_number" id="mobile_number" value="{{reading.mobile_number}}">
+                    <input type="tel" class="form-control" name="mobile_number" id="mobile_number"
+                           value="{{reading.mobile_number}}">
                 </div>
                 <div class="form-group">
                     <label for="address"> Address </label>
@@ -62,21 +63,17 @@
             </div>
             <div class="col-xs-6">
                 <h1> Triage Information </h1>
-
-                <p><b>Travel history</b></p>
-
-                    {% if reading.travel_history is none %}
-                    <textarea class="form-control" name="travel_history" rows="2"></textarea>
-                    {% else %}
-                    <textarea class="form-control" name="travel_history" id="travel_history" rows="2">{{ reading.travel_history }}</textarea>
-                    {% endif %}
+                <label for="travel_history">Travel History </label>
+                <input type="text" name="travel_history" id="travel_history"
+                       value="{% if reading.travel_history is none %}{% else %}{{reading.travel_history}}{% endif %}"
+                       data-role="tagsinput" data-provide="typeahead">
                 <br/>
 
                 <p><b> Chief Complaint </b></p>
                 {% if reading.chief_complaint is none %}
                 <textarea class="form-control" name="chief_complaint" rows="2"></textarea>
                 {% else %}
-                <textarea class="form-control" name="chief_complaint" id ="chief_complaint" rows="2">{{ reading.chief_complaint }}</textarea>
+                <textarea class="form-control" name="chief_complaint" id="chief_complaint" rows="2">{{ reading.chief_complaint }}</textarea>
                 {% endif %}
                 <br/>
                 <!-- Pain Score Slider! -->
@@ -145,4 +142,28 @@
         });
     });
 </script>
+<script>
+    $('#travel_history').tagsinput({
+        typeahead: {
+            source: ['Malaysia', 'Amsterdam', 'Washington', 'Sydney', 'Beijing', 'Cairo']
+        }
+    });
+</script>
+
+<script>
+$("#travel_history").on('itemAdded', function(event) {
+    $(".bootstrap-tagsinput").find("input").val("");
+    $(".bootstrap-tagsinput").find("input").select();
+});
+</script>
+
+<script>
+    $('#triage-form').on('keyup keypress', function(e) {
+  var code = e.keyCode || e.which;
+  if (code == 13) {
+    e.preventDefault();
+    return false;
+  }
+});</script>
+
 {% endblock %}
