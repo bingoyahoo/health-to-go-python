@@ -117,3 +117,9 @@ form label {
 .form-instructions{
     color: #888888;
 }
+
+label.error
+{
+color:red;
+font-weight:normal;
+}
