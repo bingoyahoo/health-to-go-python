@@ -105,10 +105,24 @@ class ListAll(webapp2.RequestHandler):
         template = JINJA_ENVIRONMENT.get_template('listall.html')
         self.response.write(template.render(template_values))
 
+
 class Create(webapp2.RequestHandler):
     def get(self):
-        template = JINJA_ENVIRONMENT.get_template('registration.html')
-        self.response.write(template.render())
+        nric_num = self.request.get('nric')
+        readings = PatientProfile.query(PatientProfile.nric_num == nric_num)
+        if len(nric_num) == 0 or readings.count() == 0:
+            template_values = {
+                'nric_num': nric_num,
+            }
+            template = JINJA_ENVIRONMENT.get_template('registration.html')
+            self.response.write(template.render(template_values))
+        else:
+            template_values = {
+                'nric_num': nric_num,
+                'readings': readings
+            }
+            template = JINJA_ENVIRONMENT.get_template('registration_scanner.html')
+            self.response.write(template.render(template_values))
 
     def post(self):
         # We set the same parent key on the 'PatientProfile' to ensure each
@@ -148,7 +162,6 @@ class Create(webapp2.RequestHandler):
 
         query_params = {'hospital_name': DEFAULT_HOSPITAL_NAME}
         self.redirect("listall")
-        # self.redirect('listall/?' + urllib.urlencode(query_params))
 
 
 class Triage(webapp2.RequestHandler):
