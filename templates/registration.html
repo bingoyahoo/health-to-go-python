@@ -7,7 +7,7 @@
         </h1>
 
         <form action="/create?hospital_name={{ hospital_name }}" method="post" role="form">
-            <p class="form-instructions">Please fill in the form below.</p>
+            <p class="form-instructions">Please fill in the form below to register.</p>
 
             <div class="col-md-6">
                 <div class="form-group">
@@ -16,15 +16,15 @@
                 </div>
                 <div class="form-group">
                     <label for="nricNum"> NRIC </label>
-                    <input type="text" class="form-control" id="nricNum" name="nricNum" placeholder="S1234567A">
+                    <input type="text" class="form-control" id="nricNum" name="nricNum" placeholder="S1234567A" value="{{nric_num}}">
                 </div>
                 <label for="gender"> Gender </label>
 
                 <p id="gender">
                     <input type="radio" name="gender" value="male" checked> Male
                     <input type="radio" name="gender" value="female"> Female</p>
-                <label> Nationality </label>
 
+                <label> Nationality </label>
                 <p id="nationality">
                     <input type="radio" name="nationality" value="singaporean" checked> Singaporean
                     <input type="radio" name="nationality" value="pr"> PR </p>
@@ -37,7 +37,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="race"> Race </label>
-                    <select class="form-control" id="race">
+                    <select class="form-control" id="race" name="race">
                         <option>Chinese</option>
                         <option>Malay</option>
                         <option>Indian</option>

@@ -16,14 +16,19 @@
     <![endif]-->
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="bootstrap/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="bootstrap/js/jquery-1.11.3.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="bootstrap/extensions/typeahead/bootstrap3-typeahead.min.js"></script>
+    <script type="text/javascript" src="bootstrap/extensions/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
 
        <!-- Stylesheet -->
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700'rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
     <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="bootstrap/css/custom.css" rel="stylesheet">
     <!-- DataTables CSS -->
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.9/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="bootstrap/extensions/bootstrap-tagsinput/bootstrap-tagsinput.css" >
+    <link href="bootstrap/css/custom.css" rel="stylesheet">
 
     <!-- Auto refresh page every 30 seconds -->
     <meta http-equiv="refresh" content="300">
@@ -51,14 +56,10 @@
 {% block body %}{% endblock %}
 
 {% include 'footer.html' %}
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="/bootstrap/js/bootstrap.min.js"></script>
 <!-- DataTables -->
 <script type="text/javascript" charset="utf8" src="/bootstrap/js/jquery.dataTables.min.js"></script>
 <!-- Bootstrap confirmation plugin-->
 <script type="text/javascript" src="/bootstrap/js/bootstrap-confirmation.js"></script>
-
-
 
 </body>
 </html>
