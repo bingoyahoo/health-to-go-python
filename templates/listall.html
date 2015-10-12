@@ -3,55 +3,39 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
-            <table id="table_id" class="display">
+            <table id="table_id" class="display hover">
                 <thead>
                 <tr>
                     <th>ID</th>
                     <th>NRIC</th>
                     <th>Name</th>
-                    <th>Registration Time</th>
+                    <th>Time Last Updated</th>
                     <th>Triage Data</th>
                     <th>Classification</th>
                 </tr>
                 </thead>
                 {% for reading in readings %}
                 <tr class="clickable-row" data-url="/triage">
-                    <td>
-                        {{ loop.index }}
-                    </td>
+                    <td>{{ loop.index }}</td>
 
-                    <td class="nric_field"> <!-- Nric -->
-                        {{ reading.nric_num}}
-                    </td>
-                    <td>
-                        {{ reading.name}}
-                      <!--  Created by
-                        {% if reading.hospitalStaff %}
-                        <b>{{ reading.hospitalStaff.email }}
-                            {% if user and user.user_id() == reading.hospitalStaff.identity %}
-                            (you)
-                            {% endif %}
-                        </b>
-                        {% else %}
-                        an anonymous person
-                        {% endif %}-->
-                    </td>
+                    <td class="nric_field"> <!-- Nric -->{{ reading.nric_num}}</td>
+                    <td>{{ reading.name}}</td>
                     <td> <!-- Date -->
-                        {{ reading.date}}
+                        {{ reading.date|datetimeformat }}
                     </td>
                     <td>
-                        {% if reading.temperature is none %}
+                        {% if reading.temperature == 0 or reading.temperature is none %}
                         {% else %}
                         {{reading.temperature}}&deg;C,
                         {% endif %}
 
-                        {% if reading.heartrate is none %}
+                        {% if reading.heart_rate == 0 or reading.heart_rate is none %}
                         {% else %}
-                        {{ reading.heartrate}}bpm
+                        {{ reading.heart_rate}}bpm
                         {% endif %}
                     </td>
                     <td>
-                    {% if reading.classification is none %}
+                    {% if reading.classification == 0 %}
                         {% else %}
                         P{{reading.classification}}
                         {% endif %}
@@ -81,7 +65,7 @@
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function() {
     $('#table_id').DataTable( {
-        "order": [[ 2, "asc" ]]
+        "order": [[ 0, "asc" ]]
     } );
 } );
 </script>
