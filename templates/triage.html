@@ -6,8 +6,6 @@
             <div class="col-xs-6">
                 <h1> Patient's Information </h1>
 
-                {% for reading in readings %}
-
                 <div class="form-group">
                     <label for="name"> Name </label>
                     <input type="text" class="form-control" id="name" name="name" value="{{reading.name}}">
@@ -79,37 +77,37 @@
                 <!-- Pain Score Slider! -->
                 <table class="table table-hover table-bordered">
                     <tr class="active">
-                        <th>Heart Rate</th>
-                        <th>Oxygen Saturation</th>
-                        <th>Temperature</th>
-                        <th>Blood Pressure</th>
+                        <th>Heart Rate (bpm)</th>
+                        <th>Respiratory Rate (bpm)</th>
+                        <th>Temperature (&deg;C)</th>
+                        <th>Blood Pressure (mmHg)</th>
                     </tr>
                     <tr>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
+                        <td name="heart_rate">{{measurements['heart_rate']}}</td>
+                        <td name="respo_rate">{{measurements['respo_rate']}}</td>
+                        <td name="temperature">{{measurements['temperature']}}</td>
+                        <td name="bp">{{measurements['bp']}}</td>
                     </tr>
                 </table>
                 <p><b> Recommended Patient Classification </b></p>
 
                 <p>
-                    {% if reading.classification == 1 %}
+                    {% if measurements['classification'] == 1 %}
                     <input type="radio" name="classification" value="1" checked> P1 <br/>
                     <input type="radio" name="classification" value="2"> P2 <br/>
                     <input type="radio" name="classification" value="3"> P3 <br/>
                     <input type="radio" name="classification" value="4"> P4 <br/>
-                    {% elif reading.classification == 2 %}
+                    {% elif measurements['classification'] == 2 %}
                     <input type="radio" name="classification" value="1"> P1 <br/>
                     <input type="radio" name="classification" value="2" checked> P2 <br/>
                     <input type="radio" name="classification" value="3"> P3 <br/>
                     <input type="radio" name="classification" value="4"> P4 <br/>
-                    {% elif reading.classification == 3 %}
+                    {% elif measurements['classification'] == 3 %}
                     <input type="radio" name="classification" value="1"> P1 <br/>
                     <input type="radio" name="classification" value="2"> P2 <br/>
                     <input type="radio" name="classification" value="3" checked> P3 <br/>
                     <input type="radio" name="classification" value="4"> P4 <br/>
-                    {% elif reading.classification == 4 %}
+                    {% elif measurements['classification'] == 4 %}
                     <input type="radio" name="classification" value="1"> P1 <br/>
                     <input type="radio" name="classification" value="2"> P2 <br/>
                     <input type="radio" name="classification" value="3"> P3 <br/>
@@ -121,7 +119,6 @@
                     <input type="radio" name="classification" value="4"> P4 <br/>
                     {% endif %}
                 </p>
-                {% endfor %}
                 <button class="btn btn-primary" type="submit" value="save"> Save</button>
                 <button id="cancel-triage" class="btn btn-danger confirmation-callback"> Cancel</button>
             </div>

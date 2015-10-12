@@ -9,7 +9,6 @@
         <form action="/create" method="post" role="form">
             <p class="form-instructions">Please update your personal particulars to register.</p>
 
-            {% for reading in readings %}
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="name"> Name </label>
@@ -97,7 +96,6 @@
                 <button class="btn btn-primary" type="submit" value="Register"> Register </button>
                 <button class="btn btn-danger" type="button"> Cancel</button>
             </div>
-            {% endfor %}
         </form>
     </div>
 </div>

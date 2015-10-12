@@ -1,4 +1,3 @@
-import cgi
 import urllib
 import os
 import pytz
@@ -8,6 +7,7 @@ from google.appengine.ext import ndb
 
 import webapp2
 import jinja2
+import random
 
 # Tell program where your templates are
 JINJA_ENVIRONMENT = jinja2.Environment(
@@ -15,7 +15,8 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
-def datetimeformat(value, format='%H:%M:%S (%d-%m-%Y)'):
+
+def datetimeformat(value, format='(%d-%m-%Y) %H:%M:%S'):
     return value.strftime(format)
 
 JINJA_ENVIRONMENT.filters['datetimeformat'] = datetimeformat
@@ -55,12 +56,14 @@ class PatientProfile(ndb.Model):
     address = ndb.StringProperty(indexed=False)
     add_info = ndb.StringProperty(indexed=False)
     # Triage Readings
-    temperature = ndb.StringProperty(indexed=False)
-    heartrate = ndb.StringProperty(indexed=False)
+    temperature = ndb.FloatProperty(indexed=False, default=0)
+    heart_rate = ndb.IntegerProperty(indexed=False, default=0)
+    bp = ndb.IntegerProperty(indexed=False, default=0)
+    respo_rate = ndb.IntegerProperty(indexed=False, default=0)
     date = ndb.DateTimeProperty(auto_now_add=True)
     travel_history = ndb.StringProperty(indexed=False)
     chief_complaint = ndb.StringProperty(indexed=False)
-    classification = ndb.IntegerProperty(indexed=False, default=3)
+    classification = ndb.IntegerProperty(indexed=False, default=0)
 
 
 class MainPage(webapp2.RequestHandler):
@@ -109,17 +112,17 @@ class ListAll(webapp2.RequestHandler):
 class Create(webapp2.RequestHandler):
     def get(self):
         nric_num = self.request.get('nric')
-        readings = PatientProfile.query(PatientProfile.nric_num == nric_num)
-        if len(nric_num) == 0 or readings.count() == 0:
+        if len(nric_num) == 0 :
             template_values = {
                 'nric_num': nric_num,
             }
             template = JINJA_ENVIRONMENT.get_template('registration.html')
             self.response.write(template.render(template_values))
         else:
+            reading = PatientProfile.get_by_id(id=nric_num,  parent=hospital_key(DEFAULT_HOSPITAL_NAME))
             template_values = {
                 'nric_num': nric_num,
-                'readings': readings
+                'reading': reading
             }
             template = JINJA_ENVIRONMENT.get_template('registration_scanner.html')
             self.response.write(template.render(template_values))
@@ -167,11 +170,18 @@ class Create(webapp2.RequestHandler):
 class Triage(webapp2.RequestHandler):
     def get(self):
         nric_num = self.request.get('nric')
-        readings = PatientProfile.query(PatientProfile.nric_num== nric_num)
+        reading = PatientProfile.get_by_id(id=nric_num,  parent=hospital_key(DEFAULT_HOSPITAL_NAME))
+
+        if reading.classification == 0:
+            measurements = classify_patient()
+        else:
+            measurements = {'bp': reading.bp, 'respo_rate': reading.respo_rate, 'temperature': round(reading.temperature, 1),
+                    'heart_rate': reading.heart_rate, 'classification': reading.classification}
 
         template_values = {
             'nric_num': nric_num,
-            'readings': readings
+            'reading': reading,
+            'measurements': measurements
         }
         template = JINJA_ENVIRONMENT.get_template('triage.html')
         self.response.write(template.render(template_values))
@@ -201,6 +211,10 @@ class Triage(webapp2.RequestHandler):
         # Get triage information
         patient_travel_history = self.request.get('travel_history')
         patient_chief_complaint = self.request.get('chief_complaint')
+        patient_bp = self.request.get('bp')
+        patient_heart_rate = self.request.get('heart_rate')
+        patient_respo_rate = self.request.get('respo_rate')
+        patient_temperature = self.request.get('temperature')
         patient_classification = self.request.get('classification')
 
         # Do some input validation before putting data into Datastore
@@ -217,11 +231,85 @@ class Triage(webapp2.RequestHandler):
             # Add triage information into database
             reading.travel_history = patient_travel_history
             reading.chief_complaint= patient_chief_complaint
+            # reading.bp = int(patient_bp)
+            # reading.temperature = float(patient_temperature)
+            # reading.respo_rate = int(patient_respo_rate)
+            # reading.heart_rate = int(patient_heart_rate)
             reading.classification = int(patient_classification)
             reading.put()
 
         query_params = {'hospital_name': DEFAULT_HOSPITAL_NAME}
         self.redirect("listall")
+
+
+def classify_patient():
+    bp = random.randint(60, 210) # typical range is 70 to 200
+    respo_rate = random.randint(1, 60) # typical range is 12-20 for adults, 60 for newborns
+    # Will use actual data for the two variables below
+    temperature = random.uniform(35.5, 41.0)
+    heart_rate = random.randint(40, 150)
+    measurements = {'bp': bp, 'respo_rate': respo_rate, 'temperature': round(temperature, 1),
+                    'heart_rate': heart_rate}
+
+    sum = 0;
+    # Calculate bp score
+    if bp <= 70:
+        sum += 3
+    elif bp <= 80:
+        sum += 2
+    elif bp <= 100:
+        sum += 1
+    elif bp <= 199:
+        sum += 0
+    else:
+        sum += 2
+
+    if respo_rate < 9:
+        sum += 3
+    elif respo_rate <= 14:
+        sum += 1
+    elif respo_rate <= 20:
+        sum += 0
+    elif respo_rate <= 29:
+        sum += 1
+    else:
+        sum += 3
+
+    if temperature < 35:
+        sum += 3
+    elif temperature <= 38.4:
+        sum += 0
+    else:
+        sum += 2
+
+    if heart_rate <= 40:
+        sum += 2
+    elif heart_rate <= 50:
+        sum += 1
+    elif heart_rate <= 100:
+        sum += 0
+    elif heart_rate <= 110:
+        sum += 1
+    elif heart_rate <= 129:
+        sum += 2
+    else:
+        sum += 3
+
+    measurements['MEWS'] = sum
+
+    classification = 0
+    if sum <= 2:
+        classification = 4
+    elif sum <= 4:
+        classification = 3
+    elif sum <= 8:
+        classification = 2
+    else:
+        classification = 1
+
+    measurements['classification'] = classification
+    return measurements
+
 
 class Faq(webapp2.RequestHandler):
     def get(self):

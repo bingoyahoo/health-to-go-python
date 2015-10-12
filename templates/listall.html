@@ -9,7 +9,7 @@
                     <th>ID</th>
                     <th>NRIC</th>
                     <th>Name</th>
-                    <th>Registration Time</th>
+                    <th>Time Last Updated</th>
                     <th>Triage Data</th>
                     <th>Classification</th>
                 </tr>
@@ -24,18 +24,18 @@
                         {{ reading.date|datetimeformat }}
                     </td>
                     <td>
-                        {% if reading.temperature is none %}
+                        {% if reading.temperature == 0 or reading.temperature is none %}
                         {% else %}
                         {{reading.temperature}}&deg;C,
                         {% endif %}
 
-                        {% if reading.heartrate is none %}
+                        {% if reading.heart_rate == 0 or reading.heart_rate is none %}
                         {% else %}
-                        {{ reading.heartrate}}bpm
+                        {{ reading.heart_rate}}bpm
                         {% endif %}
                     </td>
                     <td>
-                    {% if reading.classification is none %}
+                    {% if reading.classification == 0 %}
                         {% else %}
                         P{{reading.classification}}
                         {% endif %}
