@@ -316,10 +316,21 @@ class Faq(webapp2.RequestHandler):
         template = JINJA_ENVIRONMENT.get_template('faq.html')
         self.response.write(template.render())
 
+    def post(self):
+        self.redirect("/create")
+
+
+class Scan(webapp2.RequestHandler):
+    def get(self):
+        template = JINJA_ENVIRONMENT.get_template('scan.html')
+        self.response.write(template.render())
+
+
 app = webapp2.WSGIApplication([
     ('/', MainPage),
     ('/listall', ListAll),
     ('/create', Create),
     ('/triage', Triage),
-    ('/faq', Faq)
+    ('/faq', Faq),
+    ('/scan', Scan)
 ], debug=True)
