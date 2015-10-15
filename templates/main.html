@@ -1,57 +1,40 @@
 {% extends "layout.html" %}
 {% block body %}
-	<div class="jumbotron">
-		<div class="container">
-			<h1>Meet Health To Go</h1>
-			<p>The revolutionary way to register for medical treatment in
-				Singapore.</p>
-			<br>
-			<p>
-				<a class="btn btn-primary btn-lg" href="/create" role="button">Register
-					Now</a>
-		</div>
-		<!-- end container> -->
-	</div>
-	<!--  end jumbotron -->
-	</div>
-	<div class="container">
-		<!-- Example row of columns -->
+	<div class="container-fluid">
 		<div class="row">
-			<div class="col-md-4">
-				<h2>Cut the waits</h2>
-				<p> Get real-time information about the estimated waiting times at each 
-					hospital so that you know which one to register for.
-					Make an informed decision so that you will never be sick of waiting!
-				</p>
-				<p>
-					<a class="btn btn-default" href="#" role="button">View details
-						&raquo;</a>
-				</p>
-			</div>
-			<div class="col-md-4">
-				<h2>Shared medical history</h2>
-				<p>Visiting different doctors each time and hope that your previous medical 
-				    history can be shared with them for better diagnosis? HTG allows different 
-				    doctors to view your medical history once you have registered an appointment 
-				    with them.
-				<p>
-					<a class="btn btn-default" href="#" role="button">View details
-						&raquo;</a>
-				</p>
-			</div>
-			<div class="col-md-4">
-				<h2>Pay on the go</h2>
-				<p>Too sick to queue for payment? Left your wallet at home? 
-					No problem! Payments for treatments via Health To Go can be done 
-					electronically. We support credit cards and Paypal so 
-					so that you can pay from your home.
-				<p>
-					<a class="btn btn-default" href="#" role="button">View details
-						&raquo;</a>
-				</p>
+			<div class="col-sm-12">
+				<div id="my-slider" class="carousel slide" data-ride="carousel">
+
+					<!-- Indicators dot nav-->
+					<ol class="carousel-indicators">
+							<li data-target="#my-slider" data-slide-to="0" class="active"></li>
+							<li data-target="#my-slider" data-slide-to="1"></li>
+							<li data-target="#my-slider" data-slide-to="2"></li>
+					</ol>
+
+					<!-- wrapper for slides -->
+					<div class="carousel-inner" role="listbox">
+						<div class="item active">
+							<img src="img/hospitalITy.jpg" alt="first" class="img-responsive"/>
+						</div>
+						<div class="item">
+							<img src="img/onlinereg.jpg" alt="second" class="img-responsive" />
+						</div>
+						<div class="item">
+							<img src="img/tapngo.jpg" alt="third" class="img-responsive" />
+						</div>
+					</div>
+
+					<!-- controls or next and prev buttons -->
+					<a class="left carousel-control" href="#my-slider" role="button" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+					</a>
+					<a class="right carousel-control" href="#my-slider" role="button" data-slide="next"> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+					</a>
+
+				</div>
+
 			</div>
 		</div>
-
 	</div>
 	<!-- container -->
 {% endblock %}
