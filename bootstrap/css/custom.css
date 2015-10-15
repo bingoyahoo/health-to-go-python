@@ -2,31 +2,18 @@
     background-color: #193441;
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
 }
-
 .navbar-inverse .navbar-brand {
-    color: #ffffff;
+    color: #ffffff;  
 }
 
 /* Content */
 body {
-    padding-top: 70px;
+    padding-top: 42px;
     padding-bottom: 40px;
     background: #F2F2F2 none repeat scroll 0% 0%;
     font-size: 17px;
     font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
 }
-
-
-/* For Main page */
-.jumbotron {
-    margin-top: 0px;
-}
-/*
-@media (max-width: 979px) {
-    body {
-        padding-top: 0px;
-    }
-}*/
 
 /* for Faq page */
 div.page-content {
@@ -94,7 +81,7 @@ form label {
 
 #globalfooter .gf-footer-locale-flag {
     background-repeat: no-repeat;
-    margin: 1px 5px 0px 0px;
+    margin: 5px 5px 0px 0px;
     background-size: 16px 16px;
     height: 16px;
     width: 16px;
@@ -142,3 +129,18 @@ label.error {
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
     transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
 }
+/* change colour of carousel indicators */
+.carousel-indicators li {
+  background-color: #669966;
+}
+.carousel-indicators .active {
+  background-color: #FF7600;
+}
+/* the body is padded at  top by 42px to make home page look nice. then for other pages like 
+registration, an additional padding at the top is added to make them look nice*/
+.listall, .scan{
+    padding-top: 20px;
+}
+/* centralise images in carousel inside container-fluid*/
+.img-responsive{margin:0 auto}
+
