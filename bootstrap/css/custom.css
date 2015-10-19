@@ -144,3 +144,7 @@ registration, an additional padding at the top is added to make them look nice*/
 /* centralise images in carousel inside container-fluid*/
 .img-responsive{margin:0 auto}
 
+.btn-circle{
+    border-radius: 50%;
+}
+

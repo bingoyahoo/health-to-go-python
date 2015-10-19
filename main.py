@@ -172,16 +172,16 @@ class Triage(webapp2.RequestHandler):
         nric_num = self.request.get('nric')
         reading = PatientProfile.get_by_id(id=nric_num,  parent=hospital_key(DEFAULT_HOSPITAL_NAME))
 
-        if reading.classification == 0:
-            measurements = classify_patient()
-        else:
-            measurements = {'bp': reading.bp, 'respo_rate': reading.respo_rate, 'temperature': round(reading.temperature, 1),
-                    'heart_rate': reading.heart_rate, 'classification': reading.classification}
+        # if reading.classification == 0:
+        #     measurements = classify_patient()
+        # else:
+        #     measurements = {'bp': reading.bp, 'respo_rate': reading.respo_rate, 'temperature': round(reading.temperature, 1),
+        #             'heart_rate': reading.heart_rate, 'classification': reading.classification}
 
         template_values = {
             'nric_num': nric_num,
             'reading': reading,
-            'measurements': measurements
+            # 'measurements': measurements
         }
         template = JINJA_ENVIRONMENT.get_template('triage.html')
         self.response.write(template.render(template_values))
@@ -231,10 +231,10 @@ class Triage(webapp2.RequestHandler):
             # Add triage information into database
             reading.travel_history = patient_travel_history
             reading.chief_complaint= patient_chief_complaint
-            # reading.bp = int(patient_bp)
+            # reading.heart_rate = patient_heart_rate
             # reading.temperature = float(patient_temperature)
+            # reading.bp = int(patient_bp)
             # reading.respo_rate = int(patient_respo_rate)
-            # reading.heart_rate = int(patient_heart_rate)
             reading.classification = int(patient_classification)
             reading.put()
 

@@ -78,36 +78,38 @@
                 <table class="table table-hover table-bordered">
                     <tr class="active">
                         <th>Heart Rate (bpm)</th>
-                        <th>Respiratory Rate (bpm)</th>
                         <th>Temperature (&deg;C)</th>
+                        <th>Respiratory Rate (bpm)</th>
                         <th>Blood Pressure (mmHg)</th>
                     </tr>
                     <tr>
-                        <td name="heart_rate">{{measurements['heart_rate']}}</td>
-                        <td name="respo_rate">{{measurements['respo_rate']}}</td>
-                        <td name="temperature">{{measurements['temperature']}}</td>
-                        <td name="bp">{{measurements['bp']}}</td>
+                        <td name="heart_rate" id="heart_rate">{{reading.heart_rate}}</td>
+                        <td name="temperature" id="temperature">{{reading.temperature}}</td>
+                        <td name="respo_rate">{{reading.respo_rate}}</td>
+                        <td name="bp">{{reading.bp}}</td>
                     </tr>
                 </table>
+                <button type="button" id="measure" class="btn btn-info btn-circle"><i class="glyphicon glyphicon-heart"></i> Measure</button>
+
                 <p><b> Recommended Patient Classification </b></p>
 
                 <p>
-                    {% if measurements['classification'] == 1 %}
+                    {% if reading.classification == 1 %}
                     <input type="radio" name="classification" value="1" checked> P1 <br/>
                     <input type="radio" name="classification" value="2"> P2 <br/>
                     <input type="radio" name="classification" value="3"> P3 <br/>
                     <input type="radio" name="classification" value="4"> P4 <br/>
-                    {% elif measurements['classification'] == 2 %}
+                    {% elif reading.classification == 2 %}
                     <input type="radio" name="classification" value="1"> P1 <br/>
                     <input type="radio" name="classification" value="2" checked> P2 <br/>
                     <input type="radio" name="classification" value="3"> P3 <br/>
                     <input type="radio" name="classification" value="4"> P4 <br/>
-                    {% elif measurements['classification'] == 3 %}
+                    {% elif reading.classification == 3 %}
                     <input type="radio" name="classification" value="1"> P1 <br/>
                     <input type="radio" name="classification" value="2"> P2 <br/>
                     <input type="radio" name="classification" value="3" checked> P3 <br/>
                     <input type="radio" name="classification" value="4"> P4 <br/>
-                    {% elif measurements['classification'] == 4 %}
+                    {% elif reading.classification == 4 %}
                     <input type="radio" name="classification" value="1"> P1 <br/>
                     <input type="radio" name="classification" value="2"> P2 <br/>
                     <input type="radio" name="classification" value="3"> P3 <br/>
@@ -162,5 +164,23 @@ $("#travel_history").on('itemAdded', function(event) {
     return false;
   }
 });</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("#measure").click(function(e){
+        e.preventDefault();
+        $.ajax({
+            type: 'GET',
+            url: "https://api.thingspeak.com/channels/61240/feeds/last?api_key=HYCPXF3T8CAJMT4X",
+            dataType: 'json',
+            success: function(result){
+
+                $("#heart_rate").html(result['field1']);
+                $("#temperature").html(result['field2']);
+        }});
+    });
+});
+</script>
 
 {% endblock %}
