@@ -1,6 +1,7 @@
 import urllib
 import os
 import pytz
+from bs4 import BeautifulSoup
 
 from google.appengine.api import users
 from google.appengine.ext import ndb
@@ -57,9 +58,9 @@ class PatientProfile(ndb.Model):
     add_info = ndb.StringProperty(indexed=False)
     # Triage Readings
     temperature = ndb.FloatProperty(indexed=False, default=0)
-    heart_rate = ndb.IntegerProperty(indexed=False, default=0)
-    bp = ndb.IntegerProperty(indexed=False, default=0)
-    respo_rate = ndb.IntegerProperty(indexed=False, default=0)
+    heart_rate = ndb.FloatProperty(indexed=False, default=0)
+    bp = ndb.FloatProperty(indexed=False, default=0)
+    respo_rate = ndb.FloatProperty(indexed=False, default=0)
     date = ndb.DateTimeProperty(auto_now_add=True)
     travel_history = ndb.StringProperty(indexed=False)
     chief_complaint = ndb.StringProperty(indexed=False)
@@ -211,10 +212,10 @@ class Triage(webapp2.RequestHandler):
         # Get triage information
         patient_travel_history = self.request.get('travel_history')
         patient_chief_complaint = self.request.get('chief_complaint')
-        patient_bp = self.request.get('bp')
-        patient_heart_rate = self.request.get('heart_rate')
-        patient_respo_rate = self.request.get('respo_rate')
-        patient_temperature = self.request.get('temperature')
+        patient_heart_rate = self.request.get("input_heart_rate")
+        patient_temperature = self.request.get('input_temperature')
+        patient_respo_rate = self.request.get('input_respo_rate')
+        patient_bp = self.request.get('input_bp')
         patient_classification = self.request.get('classification')
 
         # Do some input validation before putting data into Datastore
@@ -231,10 +232,10 @@ class Triage(webapp2.RequestHandler):
             # Add triage information into database
             reading.travel_history = patient_travel_history
             reading.chief_complaint= patient_chief_complaint
-            # reading.heart_rate = patient_heart_rate
-            # reading.temperature = float(patient_temperature)
-            # reading.bp = int(patient_bp)
-            # reading.respo_rate = int(patient_respo_rate)
+            reading.heart_rate = float(patient_heart_rate)
+            reading.temperature = float(patient_temperature)
+            reading.bp = float(patient_bp)
+            reading.respo_rate = float(patient_respo_rate)
             reading.classification = int(patient_classification)
             reading.put()
 
