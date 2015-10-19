@@ -1,7 +1,6 @@
 import urllib
 import os
 import pytz
-from bs4 import BeautifulSoup
 
 from google.appengine.api import users
 from google.appengine.ext import ndb
