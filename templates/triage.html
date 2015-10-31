@@ -28,12 +28,19 @@
                     {% if reading.nationality == "singaporean" %}
                     <input type="radio" name="nationality" value="singaporean" checked> Singaporean
                     <input type="radio" name="nationality" value="pr"> PR
+                    <input type="radio" name="nationality" value="others"> Others  
                     {% elif reading.nationality == "pr" %}
                     <input type="radio" name="nationality" value="singaporean"> Singaporean
                     <input type="radio" name="nationality" value="pr" checked> PR
+                    <input type="radio" name="nationality" value="others"> Others  
+                    {% elif reading.nationality == "others" %}
+                    <input type="radio" name="nationality" value="singaporean"> Singaporean
+                    <input type="radio" name="nationality" value="pr"> PR
+                    <input type="radio" name="nationality" value="others" checked> Others  
                     {% else %}
                     <input type="radio" name="nationality" value="singaporean"> Singaporean
                     <input type="radio" name="nationality" value="pr"> PR
+                    <input type="radio" name="nationality" value="others"> Others  
                     {% endif %}
                 </p>
                 <!-- Insert dropdown for country of birth -->
