@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
 <div class="container listall">
-    <div class="row">
+    <div class="row page-content-listall">
         <div class="col-xs-12">
             <table id="table_id" class="display hover">
                 <thead>
@@ -31,7 +31,7 @@
 
                         {% if reading.heart_rate == 0 or reading.heart_rate is none %}
                         {% else %}
-                        {{ reading.heart_rate}}<em>bpm</em>
+                        {{ reading.heart_rate|int}}<em>bpm</em>
                         {% endif %}
                     </td>
                     <td>
@@ -69,4 +69,9 @@ $(document).ready(function() {
     } );
 } );
 </script>
+<script>
+    window.onload = function() {
+        $("label > input").focus();
+    }
+    </script>
 {% endblock %}

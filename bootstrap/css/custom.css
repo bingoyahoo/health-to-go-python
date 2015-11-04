@@ -64,6 +64,27 @@ div.page-content {
     box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.08);
 }
 
+div.page-content-listall {
+    background: #f7f7f7 none repeat scroll 0% 0%;
+    border-radius: 10px;
+    padding: 10px 40px;
+    float: left;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.08);
+    width:100%;
+}
+
+#table_id_filter > label:nth-child(1) > input:nth-child(1), #table_id_length > label:nth-child(1) > select:nth-child(1){
+    border-radius: 4px;
+}
+
+#table_id {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+table.dataTable.no-footer{
+    border-bottom: none;
+}
 ul#markdown-toc {
     margin: 30px 0px 0px;
     overflow: hidden;

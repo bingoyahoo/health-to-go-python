@@ -28,19 +28,19 @@
                     {% if reading.nationality == "singaporean" %}
                     <input type="radio" name="nationality" value="singaporean" checked> Singaporean
                     <input type="radio" name="nationality" value="pr"> PR
-                    <input type="radio" name="nationality" value="others"> Others  
+                    <input type="radio" name="nationality" value="others"> Others
                     {% elif reading.nationality == "pr" %}
                     <input type="radio" name="nationality" value="singaporean"> Singaporean
                     <input type="radio" name="nationality" value="pr" checked> PR
-                    <input type="radio" name="nationality" value="others"> Others  
+                    <input type="radio" name="nationality" value="others"> Others
                     {% elif reading.nationality == "others" %}
                     <input type="radio" name="nationality" value="singaporean"> Singaporean
                     <input type="radio" name="nationality" value="pr"> PR
-                    <input type="radio" name="nationality" value="others" checked> Others  
+                    <input type="radio" name="nationality" value="others" checked> Others
                     {% else %}
                     <input type="radio" name="nationality" value="singaporean"> Singaporean
                     <input type="radio" name="nationality" value="pr"> PR
-                    <input type="radio" name="nationality" value="others"> Others  
+                    <input type="radio" name="nationality" value="others"> Others
                     {% endif %}
                 </p>
                 <!-- Insert dropdown for country of birth -->
@@ -89,58 +89,60 @@
                         <th>Blood Pressure (mmHg)</th>
                     </tr>
                     <tr>
-                        <td id="heart_rate">{{reading.heart_rate}}</td>
+                        <td id="heart_rate">{{reading.heart_rate|int}}</td>
                         <td id="temperature">{{reading.temperature}}</td>
-                        <td id="respo_rate">{{reading.respo_rate}}</td>
+                        <td id="respo_rate">{{reading.respo_rate|int}}</td>
                         <td id="bp">{{reading.bp}}</td>
                     </tr>
                 </table>
-                  <input type="hidden" name="input_heart_rate" id="input_heart_rate"/>
-                  <input type="hidden" name="input_temperature" id="input_temperature" />
-                  <input type="hidden" name="input_respo_rate" id="input_respo_rate" />
-                  <input type="hidden"name="input_bp" id="input_bp" />
+                <input type="hidden" name="input_heart_rate" id="input_heart_rate"/>
+                <input type="hidden" name="input_temperature" id="input_temperature"/>
+                <input type="hidden" name="input_respo_rate" id="input_respo_rate"/>
+                <input type="hidden" name="input_bp" id="input_bp"/>
 
-                <button type="button" id="measure_button" class="btn btn-info btn-circle"><i class="glyphicon glyphicon-heart"></i> Measure</button>
+                <button type="button" id="measure_button" class="btn btn-info btn-circle"><i
+                        class="glyphicon glyphicon-heart"></i> Measure
+                </button>
 
                 <p><b> Recommended Patient Classification </b></p>
 
                 <p>
                     {% if reading.classification == 1 %}
-                    <input type="radio" name="classification" value="1" checked> P1 <br/>
-                    <input type="radio" name="classification" value="2"> P2 <br/>
-                    <input type="radio" name="classification" value="3"> P3 <br/>
-                    <input type="radio" name="classification" value="4"> P4 <br/>
+                    <input type="radio" name="classification" id="button1" value="1" checked> P1 <br/>
+                    <input type="radio" name="classification" id="button2" value="2"> P2 <br/>
+                    <input type="radio" name="classification" id="button3" value="3"> P3 <br/>
+                    <input type="radio" name="classification" id="button4" value="4"> P4 <br/>
                     {% elif reading.classification == 2 %}
-                    <input type="radio" name="classification" value="1"> P1 <br/>
-                    <input type="radio" name="classification" value="2" checked> P2 <br/>
-                    <input type="radio" name="classification" value="3"> P3 <br/>
-                    <input type="radio" name="classification" value="4"> P4 <br/>
+                    <input type="radio" name="classification" id="button1" value="1"> P1 <br/>
+                    <input type="radio" name="classification" id="button2" value="2" checked> P2 <br/>
+                    <input type="radio" name="classification" id="button3" value="3"> P3 <br/>
+                    <input type="radio" name="classification" id="button4" value="4"> P4 <br/>
                     {% elif reading.classification == 3 %}
-                    <input type="radio" name="classification" value="1"> P1 <br/>
-                    <input type="radio" name="classification" value="2"> P2 <br/>
-                    <input type="radio" name="classification" value="3" checked> P3 <br/>
-                    <input type="radio" name="classification" value="4"> P4 <br/>
+                    <input type="radio" name="classification" id="button1" value="1"> P1 <br/>
+                    <input type="radio" name="classification" id="button2" value="2"> P2 <br/>
+                    <input type="radio" name="classification" id="button3" value="3" checked> P3 <br/>
+                    <input type="radio" name="classification" id="button4" value="4"> P4 <br/>
                     {% elif reading.classification == 4 %}
-                    <input type="radio" name="classification" value="1"> P1 <br/>
-                    <input type="radio" name="classification" value="2"> P2 <br/>
-                    <input type="radio" name="classification" value="3"> P3 <br/>
-                    <input type="radio" name="classification" value="4" checked> P4 <br/>
+                    <input type="radio" name="classification" id="button1" value="1"> P1 <br/>
+                    <input type="radio" name="classification" id="button2" value="2"> P2 <br/>
+                    <input type="radio" name="classification" id="button3" value="3"> P3 <br/>
+                    <input type="radio" name="classification" id="button4" value="4" checked> P4 <br/>
                     {% else %}
-                    <input type="radio" name="classification" value="1"> P1 <br/>
-                    <input type="radio" name="classification" value="2"> P2 <br/>
-                    <input type="radio" name="classification" value="3"> P3 <br/>
-                    <input type="radio" name="classification" value="4"> P4 <br/>
+                    <input type="radio" name="classification" id="button1" value="1"> P1 <br/>
+                    <input type="radio" name="classification" id="button2" value="2"> P2 <br/>
+                    <input type="radio" name="classification" id="button3" value="3"> P3 <br/>
+                    <input type="radio" name="classification" id="button4" value="4"> P4 <br/>
                     {% endif %}
                 </p>
                 <button class="btn btn-primary" type="submit" value="save"> Save</button>
                 <a href="/listall">
-                <button id="cancel-triage" type="button" class="btn btn-danger confirmation-callback"> Cancel</button>
-                    </a>
+                    <button id="cancel-triage" type="button" class="btn btn-danger confirmation-callback"> Cancel
+                    </button>
+                </a>
             </div>
         </form>
     </div>
 </div>
-
 
 
 <script>
@@ -165,47 +167,26 @@
 </script>
 
 <script>
-$("#travel_history").on('itemAdded', function(event) {
-    $(".bootstrap-tagsinput").find("input").val("");
-    $(".bootstrap-tagsinput").find("input").select();
-});
+    $("#travel_history").on('itemAdded', function (event) {
+        $(".bootstrap-tagsinput").find("input").val("");
+        $(".bootstrap-tagsinput").find("input").select();
+    });
 </script>
 
 <script>
-    $('#triage-form').on('keyup keypress', function(e) {
-  var code = e.keyCode || e.which;
-  if (code == 13) {
-    e.preventDefault();
-    return false;
-  }
-});</script>
+    $('#triage-form').on('keyup keypress', function (e) {
+        var code = e.keyCode || e.which;
+        if (code == 13) {
+            e.preventDefault();
+            return false;
+        }
+    });</script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script>
-$(document).ready(function(){
-    $("#measure_button").click(function(e){
-        e.preventDefault();
-        $.ajax({
-            type: 'GET',
-            url: "https://api.thingspeak.com/channels/61240/feeds/last?api_key=HYCPXF3T8CAJMT4X",
-            dataType: 'json',
-            success: function(result){
-
-                $("#heart_rate").html(result['field1']);
-                $("#input_heart_rate").val(result['field1']);
-                $("#temperature").html(result['field2']);
-                $("#input_temperature").val(result['field2']);
-                $("#respo_rate").html(30);
-                $("#input_respo_rate").val(30);
-                $("#bp").html(40);
-                $("#input_bp").val(40);
-        }});
-    });
-});
-</script>
+<script src="bootstrap/js/triage_algo.js"></script>
 
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         var x = $("#heart_rate").html();
         $("#input_heart_rate").val(x);
         x = $("#temperature").html();
@@ -218,4 +199,7 @@ $(document).ready(function(){
     });
 </script>
 
+
+
+{% include 'footer.html' %}
 {% endblock %}
