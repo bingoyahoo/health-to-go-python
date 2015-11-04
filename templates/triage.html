@@ -81,7 +81,6 @@
                 <textarea class="form-control" name="chief_complaint" id="chief_complaint" rows="2">{{ reading.chief_complaint }}</textarea>
                 {% endif %}
                 <br/>
-                <!-- Pain Score Slider! -->
                 <table class="table table-hover table-bordered details">
                     <tr class="active">
                         <th>Heart Rate (bpm)</th>
@@ -142,6 +141,8 @@
     </div>
 </div>
 
+
+
 <script>
     $(function () {
         $('.confirmation-callback').confirmation({
@@ -201,6 +202,20 @@ $(document).ready(function(){
         }});
     });
 });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        var x = $("#heart_rate").html();
+        $("#input_heart_rate").val(x);
+        x = $("#temperature").html();
+        $("#input_temperature").val(x);
+        x = $("#respo_rate").html();
+        $("#input_respo_rate").val(x);
+        x = $("#bp").html();
+        $("#input_bp").val(x);
+
+    });
 </script>
 
 {% endblock %}

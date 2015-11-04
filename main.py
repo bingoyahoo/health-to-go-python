@@ -172,16 +172,9 @@ class Triage(webapp2.RequestHandler):
         nric_num = self.request.get('nric')
         reading = PatientProfile.get_by_id(id=nric_num,  parent=hospital_key(DEFAULT_HOSPITAL_NAME))
 
-        # if reading.classification == 0:
-        #     measurements = classify_patient()
-        # else:
-        #     measurements = {'bp': reading.bp, 'respo_rate': reading.respo_rate, 'temperature': round(reading.temperature, 1),
-        #             'heart_rate': reading.heart_rate, 'classification': reading.classification}
-
         template_values = {
             'nric_num': nric_num,
             'reading': reading,
-            # 'measurements': measurements
         }
         template = JINJA_ENVIRONMENT.get_template('triage.html')
         self.response.write(template.render(template_values))

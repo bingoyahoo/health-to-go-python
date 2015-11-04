@@ -26,12 +26,12 @@
                     <td>
                         {% if reading.temperature == 0 or reading.temperature is none %}
                         {% else %}
-                        {{reading.temperature}}&deg;C,
+                        {{reading.temperature}}<em>&deg;C</em>,
                         {% endif %}
 
                         {% if reading.heart_rate == 0 or reading.heart_rate is none %}
                         {% else %}
-                        {{ reading.heart_rate}}bpm
+                        {{ reading.heart_rate}}<em>bpm</em>
                         {% endif %}
                     </td>
                     <td>

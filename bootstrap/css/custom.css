@@ -1,16 +1,56 @@
 .navbar-inverse {
-    background-color: #263248;
+    background-color: #34465F;
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
 }
 .navbar-inverse .navbar-brand {
     color: #ffffff;  
 }
 
+.navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a {
+    color: #fff;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
+    color: #eee;
+}
+
+.col-sm-12 {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+#globalfooter {
+    background-color: #23334B;
+    width: 100%;
+}
+
+.footer .container {
+    color: #E2E2E2;
+    padding-top: 40px;
+}
+
+.faq-container{
+    padding-top:30px;
+    padding-bottom:30px;
+}
+html, body {
+	height: 100%;
+}
+.wrapper {
+	min-height: 100%;
+	height: auto !important; /* This line and the next line are not necessary unless you need IE6 support */
+	height: 100%;
+	margin: 0 auto -125px; /* the bottom margin is the negative value of the footer's height */
+}
+.footer, .push {
+	height: 125px; /* .push must be the same height as .footer */
+}
+
 /* Content */
 body {
     padding-top: 42px;
     padding-bottom: 40px;
-    background: #F2F2F2 none repeat scroll 0% 0%;
+    background: #F3F3F3 none repeat scroll 0% 0%;
     font-size: 17px;
     font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
 }
